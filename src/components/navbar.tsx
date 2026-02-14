@@ -111,11 +111,11 @@ export default function Navbar() {
                 {/* CTA + Phone */}
                 <div className="hidden lg:flex items-center gap-4">
                     <a
-                        href="tel:3058182020"
+                        href="tel:7868331180"
                         className="flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors"
                     >
                         <Phone className="w-4 h-4" />
-                        (305) 818-2020
+                        (786) 833-1180
                     </a>
                     <a
                         href="#contact"
@@ -156,11 +156,11 @@ export default function Navbar() {
                             ))}
                             <div className="pt-4 border-t border-white/10 mt-2">
                                 <a
-                                    href="tel:3058182020"
+                                    href="tel:7868331180"
                                     className="flex items-center gap-2 px-4 py-3 text-white/70"
                                 >
                                     <Phone className="w-4 h-4" />
-                                    (305) 818-2020
+                                    (786) 833-1180
                                 </a>
                                 <a
                                     href="#contact"

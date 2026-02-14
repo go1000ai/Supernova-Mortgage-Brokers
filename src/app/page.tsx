@@ -239,10 +239,10 @@ export default function HomePage() {
                                 Get a Free Quote
                             </a>
                             <a
-                                href="tel:3058182020"
+                                href="tel:7868331180"
                                 className="px-8 py-4 text-base font-semibold rounded-full border-2 border-white/40 text-white hover:bg-white hover:text-blue-700 transition-all"
                             >
-                                Call (305) 818-2020
+                                Call (786) 833-1180
                             </a>
                         </div>
                     </FadeInSection>
@@ -270,7 +270,7 @@ export default function HomePage() {
 
                             <div className="space-y-6">
                                 {[
-                                    { icon: Phone, label: "Phone", value: "(305) 818-2020", href: "tel:3058182020" },
+                                    { icon: Phone, label: "Phone", value: "(786) 833-1180", href: "tel:7868331180" },
                                     { icon: Mail, label: "Email", value: "CorporatePlaza@mmi.biz", href: "mailto:CorporatePlaza@mmi.biz" },
                                     { icon: MapPin, label: "Address", value: "6175 NW 153rd St, Suite 230, Miami Lakes, FL 33014", href: "#" },
                                     { icon: Clock, label: "Hours", value: "Mon-Fri: 9AM - 6PM | Sat: By Appointment", href: "#" },
@@ -419,9 +419,9 @@ export default function HomePage() {
                                     6175 NW 153rd St, Suite 230, Miami Lakes, FL 33014
                                 </li>
                                 <li>
-                                    <a href="tel:3058182020" className="flex items-center gap-2 hover:text-white transition-colors">
+                                    <a href="tel:7868331180" className="flex items-center gap-2 hover:text-white transition-colors">
                                         <Phone className="w-4 h-4" />
-                                        (305) 818-2020
+                                        (786) 833-1180
                                     </a>
                                 </li>
                                 <li>
