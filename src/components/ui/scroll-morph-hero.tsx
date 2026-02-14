@@ -199,7 +199,13 @@ export default function IntroAnimation() {
             const deltaY = touchStartY - touchY;
             touchStartY = touchY;
 
-            const newScroll = Math.min(Math.max(scrollRef.current + deltaY, 0), MAX_SCROLL);
+            // Release scroll when animation is complete (swiping up at max) or at top (swiping down)
+            if (scrollRef.current >= MAX_SCROLL && deltaY > 0) return;
+            if (scrollRef.current <= 0 && deltaY < 0) return;
+
+            e.preventDefault();
+
+            const newScroll = Math.min(Math.max(scrollRef.current + deltaY * 2, 0), MAX_SCROLL);
             scrollRef.current = newScroll;
             virtualScroll.set(newScroll);
         };

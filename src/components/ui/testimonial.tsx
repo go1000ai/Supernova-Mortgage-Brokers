@@ -63,9 +63,9 @@ export function TestimonialCards() {
                 </div>
 
                 {/* Photo Cards Row */}
-                <div className="flex flex-wrap items-center justify-center gap-6 mb-12">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
                     {TESTIMONIALS.map((t) => (
-                        <div key={t.name} className="max-w-80 bg-[#0a1628] border border-white/[0.06] text-white rounded-2xl hover:-translate-y-1 transition-all duration-300">
+                        <div key={t.name} className="bg-[#0a1628] border border-white/[0.06] text-white rounded-2xl hover:-translate-y-1 transition-all duration-300">
                             <div className="relative -mt-px overflow-hidden rounded-t-2xl">
                                 <img
                                     src={t.image}
@@ -88,9 +88,9 @@ export function TestimonialCards() {
                 </div>
 
                 {/* Detail Cards Row */}
-                <div className="flex flex-wrap justify-center gap-6 text-left">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
                     {TESTIMONIALS.map((t) => (
-                        <div key={`detail-${t.name}`} className="w-80 flex flex-col items-start bg-white/[0.03] border border-white/[0.06] p-6 rounded-2xl hover:bg-white/[0.06] transition-all duration-300">
+                        <div key={`detail-${t.name}`} className="flex flex-col items-start bg-white/[0.03] border border-white/[0.06] p-6 rounded-2xl hover:bg-white/[0.06] transition-all duration-300">
                             <QuoteIcon />
                             <StarRating />
                             <p className="text-sm mt-4 text-white/50 leading-relaxed">

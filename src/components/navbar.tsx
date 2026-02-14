@@ -34,6 +34,7 @@ export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+    const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -111,11 +112,11 @@ export default function Navbar() {
                 {/* CTA + Phone */}
                 <div className="hidden lg:flex items-center gap-4">
                     <a
-                        href="tel:7868331180"
+                        href="tel:3213350399"
                         className="flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors"
                     >
                         <Phone className="w-4 h-4" />
-                        (786) 833-1180
+                        (321) 335-0399
                     </a>
                     <a
                         href="#contact"
@@ -143,24 +144,58 @@ export default function Navbar() {
                         exit={{ opacity: 0, height: 0 }}
                         className="lg:hidden bg-[#0a1628]/98 backdrop-blur-md border-t border-white/10"
                     >
-                        <nav className="flex flex-col p-6 gap-2">
+                        <nav className="flex flex-col p-6 gap-1">
                             {NAV_LINKS.map((link) => (
-                                <a
-                                    key={link.label}
-                                    href={link.href}
-                                    onClick={() => setMobileOpen(false)}
-                                    className="px-4 py-3 text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
-                                >
-                                    {link.label}
-                                </a>
+                                <div key={link.label}>
+                                    {link.children ? (
+                                        <>
+                                            <button
+                                                onClick={() => setMobileDropdown(mobileDropdown === link.label ? null : link.label)}
+                                                className="w-full flex items-center justify-between px-4 py-3 text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                                            >
+                                                {link.label}
+                                                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileDropdown === link.label ? "rotate-180" : ""}`} />
+                                            </button>
+                                            <AnimatePresence>
+                                                {mobileDropdown === link.label && (
+                                                    <motion.div
+                                                        initial={{ opacity: 0, height: 0 }}
+                                                        animate={{ opacity: 1, height: "auto" }}
+                                                        exit={{ opacity: 0, height: 0 }}
+                                                        className="overflow-hidden"
+                                                    >
+                                                        {link.children.map((child) => (
+                                                            <a
+                                                                key={child.label}
+                                                                href={child.href}
+                                                                onClick={() => setMobileOpen(false)}
+                                                                className="block pl-8 pr-4 py-2.5 text-sm text-white/50 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                                                            >
+                                                                {child.label}
+                                                            </a>
+                                                        ))}
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+                                        </>
+                                    ) : (
+                                        <a
+                                            href={link.href}
+                                            onClick={() => setMobileOpen(false)}
+                                            className="block px-4 py-3 text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                                        >
+                                            {link.label}
+                                        </a>
+                                    )}
+                                </div>
                             ))}
                             <div className="pt-4 border-t border-white/10 mt-2">
                                 <a
-                                    href="tel:7868331180"
+                                    href="tel:3213350399"
                                     className="flex items-center gap-2 px-4 py-3 text-white/70"
                                 >
                                     <Phone className="w-4 h-4" />
-                                    (786) 833-1180
+                                    (321) 335-0399
                                 </a>
                                 <a
                                     href="#contact"
