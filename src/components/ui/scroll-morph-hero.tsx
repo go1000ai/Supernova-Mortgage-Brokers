@@ -299,21 +299,27 @@ export default function IntroAnimation() {
 
             <div className="relative flex h-full w-full flex-col items-center justify-center perspective-1000">
 
-                {/* Intro Text (Fades out) */}
-                <div className="absolute z-0 flex flex-col items-center justify-center text-center pointer-events-none top-1/2 -translate-y-1/2">
+                {/* Intro Text (Fades out) — fits inside card circle */}
+                <div className="absolute z-0 flex flex-col items-center justify-center text-center pointer-events-none top-1/2 -translate-y-1/2 w-[200px] md:w-auto">
                     <motion.h1
                         initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
                         animate={introPhase === "circle" && morphValue < 0.5 ? { opacity: 1 - morphValue * 2, y: 0, filter: "blur(0px)" } : { opacity: 0, filter: "blur(10px)" }}
                         transition={{ duration: 1 }}
-                        className="text-2xl font-medium tracking-tight text-white md:text-4xl"
+                        className="text-lg font-semibold tracking-tight text-white md:text-4xl leading-tight"
                     >
-                        The Right Loan. Right Now.
+                        <span className="md:hidden flex flex-col items-center gap-1">
+                            <span>The</span>
+                            <span>Right</span>
+                            <span>Loan.</span>
+                            <span className="mt-1 text-sm font-normal tracking-[0.15em] text-white/60">Right Now.</span>
+                        </span>
+                        <span className="hidden md:inline">The Right Loan. Right Now.</span>
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0 }}
                         animate={introPhase === "circle" && morphValue < 0.5 ? { opacity: 0.5 - morphValue } : { opacity: 0 }}
                         transition={{ duration: 1, delay: 0.2 }}
-                        className="mt-4 text-xs font-bold tracking-[0.2em] text-white/50"
+                        className="mt-3 text-[10px] md:text-xs font-bold tracking-[0.2em] text-white/50"
                     >
                         SCROLL TO EXPLORE
                     </motion.p>
