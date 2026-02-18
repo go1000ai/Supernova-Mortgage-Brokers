@@ -38,9 +38,17 @@ const LivingNebula: React.FC<LivingNebulaProps> = ({
     let w = (canvas.width = width ?? window.innerWidth);
     let h = (canvas.height = height ?? window.innerHeight);
 
-    // Emission center (follows mouse slightly for parallax)
     const emission = { x: w / 2, y: h / 2 };
     const mouse = { x: 0, y: 0 };
+    let stopped = false;
+    let visible = true;
+
+    // Pause animation when scrolled out of view
+    const observer = new IntersectionObserver(
+      ([entry]) => { visible = entry.isIntersecting; },
+      { threshold: 0 }
+    );
+    observer.observe(canvas);
 
     const handleMouseMove = (e: MouseEvent) => {
       mouse.x = (e.clientX / w - 0.5) * 2;
@@ -48,69 +56,35 @@ const LivingNebula: React.FC<LivingNebulaProps> = ({
     };
     window.addEventListener('mousemove', handleMouseMove);
 
-    class Particle {
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      lifetime: number;
-      age: number;
+    // Particle data stored as flat arrays for better performance
+    const count = particleCount;
+    const px = new Float32Array(count);
+    const py = new Float32Array(count);
+    const vx = new Float32Array(count);
+    const vy = new Float32Array(count);
+    const life = new Float32Array(count);
+    const age = new Float32Array(count);
 
-      constructor() {
-        this.x = 0;
-        this.y = 0;
-        this.vx = 0;
-        this.vy = 0;
-        this.lifetime = 0;
-        this.age = 0;
-        this.rebirth();
-      }
-
-      rebirth() {
-        // Spawn from emission center with slight spread
-        this.x = emission.x + (Math.random() - 0.5) * 10;
-        this.y = emission.y + (Math.random() - 0.5) * 10;
-        const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 5 + 0.8;
-        this.vx = Math.cos(angle) * speed;
-        this.vy = Math.sin(angle) * speed;
-        this.lifetime = Math.random() * 220 + 180;
-        this.age = 0;
-      }
-
-      update() {
-        this.age++;
-        if (this.age > this.lifetime) this.rebirth();
-        this.vx *= 0.99;
-        this.vy *= 0.99;
-        this.x += this.vx;
-        this.y += this.vy;
-      }
-
-      draw() {
-        const ratio = this.age / this.lifetime;
-        const opacity = Math.sin(ratio * Math.PI) * 0.9;
-        const dist = Math.hypot(this.x - emission.x, this.y - emission.y);
-        // Gold supernova: hot white-gold core, amber/orange edges
-        const hue = 45 - dist * 0.06;
-        const saturation = 85 + dist * 0.05;
-        const lightness = 70 - dist * 0.08;
-
-        ctx.beginPath();
-        ctx.fillStyle = `hsla(${hue},${Math.min(saturation, 100)}%,${Math.max(lightness, 40)}%,${opacity})`;
-        ctx.arc(this.x, this.y, 1.5 + (1 - ratio) * 2.2, 0, Math.PI * 2);
-        ctx.fill();
-      }
+    function rebirth(i: number) {
+      px[i] = emission.x + (Math.random() - 0.5) * 10;
+      py[i] = emission.y + (Math.random() - 0.5) * 10;
+      const angle = Math.random() * Math.PI * 2;
+      const speed = Math.random() * 5 + 0.8;
+      vx[i] = Math.cos(angle) * speed;
+      vy[i] = Math.sin(angle) * speed;
+      life[i] = Math.random() * 220 + 180;
+      age[i] = 0;
     }
 
-    let particles = Array.from(
-      { length: particleCount },
-      () => new Particle()
-    );
+    for (let i = 0; i < count; i++) rebirth(i);
+
     let time = 0;
     let rafId: number;
 
     const animate = () => {
+      if (stopped) return;
+      if (!visible) { rafId = requestAnimationFrame(animate); return; }
+
       // Dark trail overlay
       ctx.fillStyle = `rgba(0,0,0,${trailLength})`;
       ctx.fillRect(0, 0, w, h);
@@ -120,22 +94,16 @@ const LivingNebula: React.FC<LivingNebulaProps> = ({
       emission.y += ((h / 2 + mouse.y * 20) - emission.y) * 0.02;
 
       // Parallax shift on the canvas container
-      if (container) {
-        container.style.transform = `translate(${mouse.x * -15}px, ${mouse.y * -10}px)`;
-      }
+      container.style.transform = `translate(${mouse.x * -15}px, ${mouse.y * -10}px)`;
 
-      // Glowing gold effect
-      ctx.shadowBlur = canvasGlow;
-      ctx.shadowColor = `hsla(${40 + time * 0.02},90%,55%,1)`;
-
-      // Draw a soft radial core glow at emission center
+      // Draw a soft radial core glow at emission center (NO shadowBlur)
       const coreGlow = ctx.createRadialGradient(
         emission.x, emission.y, 0,
         emission.x, emission.y, 120
       );
       const corePulse = (Math.sin(time * 0.03) + 1) / 2;
-      coreGlow.addColorStop(0, `rgba(232, 196, 122, ${0.06 + corePulse * 0.04})`);
-      coreGlow.addColorStop(0.5, `rgba(210, 158, 74, ${0.02 + corePulse * 0.02})`);
+      coreGlow.addColorStop(0, `rgba(232, 196, 122, ${0.08 + corePulse * 0.06})`);
+      coreGlow.addColorStop(0.5, `rgba(210, 158, 74, ${0.03 + corePulse * 0.03})`);
       coreGlow.addColorStop(1, 'rgba(210, 158, 74, 0)');
       ctx.fillStyle = coreGlow;
       ctx.fillRect(0, 0, w, h);
@@ -144,31 +112,44 @@ const LivingNebula: React.FC<LivingNebulaProps> = ({
       const pulse = (Math.sin(time * pulseFrequency) + 1) / 2;
       const extra = Math.floor(pulse * emissionRate);
       for (let i = 0; i < extra; i++) {
-        const p = particles[Math.floor(Math.random() * particles.length)];
-        if (p.age > p.lifetime) p.rebirth();
+        const idx = Math.floor(Math.random() * count);
+        if (age[idx] > life[idx]) rebirth(idx);
       }
 
-      // Update & draw particles
-      particles.forEach((p) => {
-        p.update();
-        p.draw();
-      });
+      // Update & draw particles — no shadowBlur, no per-particle object overhead
+      for (let i = 0; i < count; i++) {
+        age[i]++;
+        if (age[i] > life[i]) rebirth(i);
+        vx[i] *= 0.99;
+        vy[i] *= 0.99;
+        px[i] += vx[i];
+        py[i] += vy[i];
 
-      ctx.shadowBlur = 0;
+        const ratio = age[i] / life[i];
+        const opacity = Math.sin(ratio * Math.PI) * 0.9;
+        const dist = Math.hypot(px[i] - emission.x, py[i] - emission.y);
+        const hue = 45 - dist * 0.06;
+        const sat = Math.min(85 + dist * 0.05, 100);
+        const lit = Math.max(70 - dist * 0.08, 40);
+
+        ctx.beginPath();
+        ctx.fillStyle = `hsla(${hue},${sat}%,${lit}%,${opacity})`;
+        ctx.arc(px[i], py[i], 1.5 + (1 - ratio) * 2.2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
       time++;
       rafId = requestAnimationFrame(animate);
     };
 
     const handleResize = () => {
+      if (stopped) return;
       cancelAnimationFrame(rafId);
       w = canvas.width = width ?? window.innerWidth;
       h = canvas.height = height ?? window.innerHeight;
       emission.x = w / 2;
       emission.y = h / 2;
-      particles = Array.from(
-        { length: particleCount },
-        () => new Particle()
-      );
+      for (let i = 0; i < count; i++) rebirth(i);
       time = 0;
       animate();
     };
@@ -177,7 +158,9 @@ const LivingNebula: React.FC<LivingNebulaProps> = ({
     animate();
 
     return () => {
+      stopped = true;
       cancelAnimationFrame(rafId);
+      observer.disconnect();
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
     };
@@ -204,7 +187,11 @@ const LivingNebula: React.FC<LivingNebulaProps> = ({
         <canvas
           ref={canvasRef}
           aria-hidden="true"
-          style={{ display: 'block', width: 'calc(100% + 60px)', height: 'calc(100% + 60px)' }}
+          style={{
+            display: 'block',
+            width: '100%',
+            height: '100%',
+          }}
         />
       </div>
       {children}

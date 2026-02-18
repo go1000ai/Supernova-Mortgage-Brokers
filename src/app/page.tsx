@@ -233,7 +233,7 @@ export default function HomePage() {
 
             {/* ===== HERO — Supernova Nebula ===== */}
             <LivingNebula
-                particleCount={1400}
+                particleCount={800}
                 trailLength={0.12}
                 canvasGlow={25}
                 pulseFrequency={0.002}
@@ -253,41 +253,14 @@ export default function HomePage() {
                         }}
                         className="relative mb-6"
                     >
-                        {/* Outer shockwave — big slow ring */}
-                        <motion.div
-                            className="absolute inset-[-80px] rounded-full border-2 border-[#d29e4a]/10"
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ scale: [1, 2.5], opacity: [0.4, 0] }}
-                            transition={{ duration: 3, repeat: Infinity, ease: "easeOut", delay: 1.5 }}
-                        />
-                        {/* Mid shockwave */}
-                        <motion.div
-                            className="absolute inset-[-60px] rounded-full border border-[#e8c47a]/15"
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ scale: [1, 2, 1], opacity: [0.3, 0, 0.3] }}
-                            transition={{ duration: 4, repeat: Infinity, ease: "easeOut", delay: 2 }}
-                        />
-                        {/* Inner shockwave — fast tight ring */}
-                        <motion.div
-                            className="absolute inset-[-30px] rounded-full border border-[#d29e4a]/25"
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ scale: [1, 1.6, 1], opacity: [0.5, 0, 0.5] }}
-                            transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut", delay: 2.5 }}
-                        />
-
-                        {/* Neon outline glow — traces the logo shape, breathes after blast */}
+                        {/* Neon outline glow — static glow for performance */}
                         <motion.div
                             className="relative z-10"
-                            initial={{ filter: "drop-shadow(0 0 0px rgba(210,158,74,0))" }}
-                            animate={{
-                                filter: [
-                                    "drop-shadow(0 0 15px rgba(210,158,74,1)) drop-shadow(0 0 40px rgba(232,196,122,0.8)) drop-shadow(0 0 80px rgba(210,158,74,0.5)) drop-shadow(0 0 120px rgba(210,158,74,0.3))",
-                                    "drop-shadow(0 0 25px rgba(210,158,74,1)) drop-shadow(0 0 60px rgba(232,196,122,1)) drop-shadow(0 0 110px rgba(210,158,74,0.7)) drop-shadow(0 0 160px rgba(210,158,74,0.4))",
-                                    "drop-shadow(0 0 15px rgba(210,158,74,1)) drop-shadow(0 0 40px rgba(232,196,122,0.8)) drop-shadow(0 0 80px rgba(210,158,74,0.5)) drop-shadow(0 0 120px rgba(210,158,74,0.3))",
-                                ],
-                            }}
-                            transition={{
-                                filter: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 2 },
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 1.5, delay: 2 }}
+                            style={{
+                                filter: "drop-shadow(0 0 20px rgba(210,158,74,0.9)) drop-shadow(0 0 50px rgba(232,196,122,0.5))",
                             }}
                         >
                             <Image
@@ -309,22 +282,14 @@ export default function HomePage() {
                     >
                         <span className="text-white" style={{ textShadow: '0 0 20px rgba(255,255,255,0.6), 0 0 50px rgba(255,255,255,0.3), 0 0 100px rgba(255,255,255,0.15)' }}>Your Home Journey,</span>
                         <br />
-                        <motion.span
+                        <span
                             className="relative inline-block text-[#f5d98a]"
                             style={{
-                                textShadow: '0 0 10px rgba(210,158,74,0.8), 0 0 30px rgba(210,158,74,0.5), 0 0 60px rgba(210,158,74,0.3), 2px 2px 0 #0e2922, -2px -2px 0 #0e2922, 2px -2px 0 #0e2922, -2px 2px 0 #0e2922, 0 2px 0 #0e2922, 0 -2px 0 #0e2922, 2px 0 0 #0e2922, -2px 0 0 #0e2922',
+                                textShadow: '0 0 15px rgba(210,158,74,0.9), 0 0 40px rgba(210,158,74,0.5), 2px 2px 0 #0e2922, -2px -2px 0 #0e2922, 2px -2px 0 #0e2922, -2px 2px 0 #0e2922',
                             }}
-                            animate={{
-                                textShadow: [
-                                    '0 0 10px rgba(210,158,74,0.8), 0 0 30px rgba(210,158,74,0.5), 0 0 60px rgba(210,158,74,0.3), 2px 2px 0 #0e2922, -2px -2px 0 #0e2922, 2px -2px 0 #0e2922, -2px 2px 0 #0e2922, 0 2px 0 #0e2922, 0 -2px 0 #0e2922, 2px 0 0 #0e2922, -2px 0 0 #0e2922',
-                                    '0 0 20px rgba(210,158,74,1), 0 0 50px rgba(210,158,74,0.7), 0 0 90px rgba(210,158,74,0.4), 2px 2px 0 #0e2922, -2px -2px 0 #0e2922, 2px -2px 0 #0e2922, -2px 2px 0 #0e2922, 0 2px 0 #0e2922, 0 -2px 0 #0e2922, 2px 0 0 #0e2922, -2px 0 0 #0e2922',
-                                    '0 0 10px rgba(210,158,74,0.8), 0 0 30px rgba(210,158,74,0.5), 0 0 60px rgba(210,158,74,0.3), 2px 2px 0 #0e2922, -2px -2px 0 #0e2922, 2px -2px 0 #0e2922, -2px 2px 0 #0e2922, 0 2px 0 #0e2922, 0 -2px 0 #0e2922, 2px 0 0 #0e2922, -2px 0 0 #0e2922',
-                                ],
-                            }}
-                            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
                         >
                             Ignited.
-                        </motion.span>
+                        </span>
                     </motion.h1>
 
                     <motion.p
