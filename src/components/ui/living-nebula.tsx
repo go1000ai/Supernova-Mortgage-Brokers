@@ -35,8 +35,8 @@ const LivingNebula: React.FC<LivingNebulaProps> = ({
     const container = containerRef.current;
     if (!canvas || !container) return;
     const ctx = canvas.getContext('2d')!;
-    let w = (canvas.width = width ?? window.innerWidth);
-    let h = (canvas.height = height ?? window.innerHeight);
+    let w = (canvas.width = width ?? container.offsetWidth);
+    let h = (canvas.height = height ?? container.offsetHeight);
 
     const emission = { x: w / 2, y: h / 2 };
     const mouse = { x: 0, y: 0 };
@@ -145,8 +145,8 @@ const LivingNebula: React.FC<LivingNebulaProps> = ({
     const handleResize = () => {
       if (stopped) return;
       cancelAnimationFrame(rafId);
-      w = canvas.width = width ?? window.innerWidth;
-      h = canvas.height = height ?? window.innerHeight;
+      w = canvas.width = width ?? container.offsetWidth;
+      h = canvas.height = height ?? container.offsetHeight;
       emission.x = w / 2;
       emission.y = h / 2;
       for (let i = 0; i < count; i++) rebirth(i);
