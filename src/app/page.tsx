@@ -310,20 +310,20 @@ export default function HomePage() {
                         <span className="text-white" style={{ textShadow: '0 0 20px rgba(255,255,255,0.6), 0 0 50px rgba(255,255,255,0.3), 0 0 100px rgba(255,255,255,0.15)' }}>Your Home Journey,</span>
                         <br />
                         <motion.span
-                            className="relative inline-block"
+                            className="relative inline-block text-[#f5d98a]"
+                            style={{
+                                textShadow: '0 0 10px rgba(210,158,74,0.8), 0 0 30px rgba(210,158,74,0.5), 0 0 60px rgba(210,158,74,0.3), 2px 2px 0 #0e2922, -2px -2px 0 #0e2922, 2px -2px 0 #0e2922, -2px 2px 0 #0e2922, 0 2px 0 #0e2922, 0 -2px 0 #0e2922, 2px 0 0 #0e2922, -2px 0 0 #0e2922',
+                            }}
                             animate={{
-                                filter: [
-                                    'drop-shadow(0 0 20px rgba(210,158,74,0.9)) drop-shadow(0 0 50px rgba(232,196,122,0.6))',
-                                    'drop-shadow(0 0 35px rgba(210,158,74,1)) drop-shadow(0 0 80px rgba(232,196,122,0.9)) drop-shadow(0 0 120px rgba(210,158,74,0.5))',
-                                    'drop-shadow(0 0 20px rgba(210,158,74,0.9)) drop-shadow(0 0 50px rgba(232,196,122,0.6))',
+                                textShadow: [
+                                    '0 0 10px rgba(210,158,74,0.8), 0 0 30px rgba(210,158,74,0.5), 0 0 60px rgba(210,158,74,0.3), 2px 2px 0 #0e2922, -2px -2px 0 #0e2922, 2px -2px 0 #0e2922, -2px 2px 0 #0e2922, 0 2px 0 #0e2922, 0 -2px 0 #0e2922, 2px 0 0 #0e2922, -2px 0 0 #0e2922',
+                                    '0 0 20px rgba(210,158,74,1), 0 0 50px rgba(210,158,74,0.7), 0 0 90px rgba(210,158,74,0.4), 2px 2px 0 #0e2922, -2px -2px 0 #0e2922, 2px -2px 0 #0e2922, -2px 2px 0 #0e2922, 0 2px 0 #0e2922, 0 -2px 0 #0e2922, 2px 0 0 #0e2922, -2px 0 0 #0e2922',
+                                    '0 0 10px rgba(210,158,74,0.8), 0 0 30px rgba(210,158,74,0.5), 0 0 60px rgba(210,158,74,0.3), 2px 2px 0 #0e2922, -2px -2px 0 #0e2922, 2px -2px 0 #0e2922, -2px 2px 0 #0e2922, 0 2px 0 #0e2922, 0 -2px 0 #0e2922, 2px 0 0 #0e2922, -2px 0 0 #0e2922',
                                 ],
                             }}
                             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
                         >
-                            <span className="absolute inset-0 bg-gradient-to-r from-[#d29e4a]/20 via-[#e8c47a]/30 to-[#d29e4a]/20 blur-2xl rounded-full scale-150" />
-                            <span className="relative bg-gradient-to-r from-[#d29e4a] via-[#f5d98a] to-[#d29e4a] bg-clip-text text-transparent" style={{ WebkitTextStroke: '1px rgba(210,158,74,0.3)' }}>
-                                Ignited.
-                            </span>
+                            Ignited.
                         </motion.span>
                     </motion.h1>
 
