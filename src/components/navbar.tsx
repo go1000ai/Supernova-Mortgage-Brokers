@@ -5,29 +5,28 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Phone, Menu, X, ChevronDown } from "lucide-react";
 
 const NAV_LINKS = [
-    { label: "About Us", href: "#about" },
+    { label: "About Us", href: "/#about" },
     {
         label: "Purchase",
-        href: "#services",
+        href: "/programs/fha-loans",
         children: [
-            { label: "FHA Loans", href: "#services" },
-            { label: "VA Loans", href: "#services" },
-            { label: "Conventional", href: "#services" },
-            { label: "Bank Statement", href: "#services" },
+            { label: "FHA Loans", href: "/programs/fha-loans" },
+            { label: "VA Loans", href: "/programs/va-loans" },
+            { label: "Conventional", href: "/programs/conventional" },
+            { label: "Bank Statement", href: "/programs/bank-statement" },
         ],
     },
     {
         label: "Refinance",
-        href: "#services",
+        href: "/programs/cash-out-refinance",
         children: [
-            { label: "Cash Out Refinance", href: "#services" },
-            { label: "FHA/VA Streamline", href: "#services" },
-            { label: "Reverse Mortgages", href: "#services" },
+            { label: "Cash Out Refinance", href: "/programs/cash-out-refinance" },
+            { label: "Reverse Mortgages", href: "/programs/reverse-mortgage" },
         ],
     },
-    { label: "Tools", href: "#process" },
-    { label: "Testimonials", href: "#testimonials" },
-    { label: "Contact", href: "#contact" },
+    { label: "Tools", href: "/tools" },
+    { label: "Testimonials", href: "/#testimonials" },
+    { label: "Contact", href: "/#contact" },
 ];
 
 export default function Navbar() {
@@ -43,16 +42,19 @@ export default function Navbar() {
     }, []);
 
     return (
-        <header
+        <motion.header
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
                 scrolled
-                    ? "bg-[#0e2922]/95 backdrop-blur-md border-b border-[#d29e4a]/10 shadow-lg"
+                    ? "bg-black/80 backdrop-blur-xl border-b border-[#d29e4a]/20 shadow-2xl"
                     : "bg-transparent"
             }`}
         >
-            <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
+            <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-24">
                 {/* Logo */}
-                <a href="#" className="flex items-center gap-3 relative group">
+                <a href="/" className="flex items-center gap-3 relative group">
                     <div className="relative">
                         {/* Gold glow layers */}
                         <div className="absolute -inset-1.5 rounded-xl bg-gradient-to-r from-[#d29e4a] via-[#e8c47a] to-[#d29e4a] opacity-40 blur-md group-hover:opacity-70 transition-opacity duration-500 animate-pulse" />
@@ -61,7 +63,7 @@ export default function Navbar() {
                         <img
                             src="/logo.png"
                             alt="Supernova Mortgage Brokers"
-                            className="relative h-14 w-auto rounded-lg border border-[#d29e4a]/30 shadow-[0_0_15px_rgba(210,158,74,0.25),0_0_30px_rgba(210,158,74,0.1)]"
+                            className="relative h-20 w-auto rounded-lg border border-[#d29e4a]/30 shadow-[0_0_15px_rgba(210,158,74,0.25),0_0_30px_rgba(210,158,74,0.1)]"
                         />
                     </div>
                 </a>
@@ -77,10 +79,12 @@ export default function Navbar() {
                         >
                             <a
                                 href={link.href}
-                                className="px-4 py-2 text-sm font-medium text-white/70 hover:text-[#d29e4a] transition-colors rounded-lg hover:bg-white/5 flex items-center gap-1"
+                                className="relative px-4 py-2 text-sm font-medium text-white/70 hover:text-[#d29e4a] transition-colors rounded-lg hover:bg-white/5 flex items-center gap-1 group"
                             >
                                 {link.label}
                                 {link.children && <ChevronDown className="w-3 h-3" />}
+                                {/* Gold underline on hover */}
+                                <span className="absolute -bottom-1 left-2 right-2 h-0.5 bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
                             </a>
 
                             {/* Dropdown */}
@@ -97,7 +101,7 @@ export default function Navbar() {
                                             <a
                                                 key={child.label}
                                                 href={child.href}
-                                                className="block px-4 py-3 text-sm text-white/70 hover:text-[#d29e4a] hover:bg-white/5 transition-colors"
+                                                className="block px-4 py-3 text-sm text-white/70 hover:text-[#d29e4a] hover:bg-white/5 transition-all hover:pl-6 duration-200"
                                             >
                                                 {child.label}
                                             </a>
@@ -118,12 +122,15 @@ export default function Navbar() {
                         <Phone className="w-4 h-4" />
                         (321) 335-0399
                     </a>
-                    <a
+                    <motion.a
                         href="#contact"
-                        className="px-6 py-2.5 text-sm font-semibold rounded-full bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] text-[#0e2922] shadow-lg shadow-[#d29e4a]/25 hover:shadow-[#d29e4a]/40 transition-all hover:-translate-y-0.5"
+                        className="px-6 py-2.5 text-sm font-semibold rounded-full bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] text-[#0e2922] shadow-lg shadow-[#d29e4a]/25"
+                        whileHover={{ y: -2, boxShadow: "0 15px 30px rgba(210,158,74,0.4)" }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ type: "spring", stiffness: 400 }}
                     >
                         Apply Now
-                    </a>
+                    </motion.a>
                 </div>
 
                 {/* Mobile Hamburger */}
@@ -142,7 +149,7 @@ export default function Navbar() {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="lg:hidden bg-[#0e2922]/98 backdrop-blur-md border-t border-[#d29e4a]/10"
+                        className="lg:hidden bg-black/95 backdrop-blur-xl border-t border-[#d29e4a]/10"
                     >
                         <nav className="flex flex-col p-6 gap-1">
                             {NAV_LINKS.map((link) => (
@@ -209,6 +216,6 @@ export default function Navbar() {
                     </motion.div>
                 )}
             </AnimatePresence>
-        </header>
+        </motion.header>
     );
 }

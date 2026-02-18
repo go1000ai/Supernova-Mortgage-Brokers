@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import React, { useRef, useEffect, useState } from "react";
+import { motion, useInView, useSpring, useScroll, useTransform } from "framer-motion";
 import {
     Shield,
     FileText,
@@ -14,16 +14,16 @@ import {
     Clock,
     CheckCircle2,
 } from "lucide-react";
-import ScrollExpandMedia from "@/components/ui/scroll-expansion-hero";
+import Image from "next/image";
+import LivingNebula from "@/components/ui/living-nebula";
 import { LandingAccordionItem } from "@/components/ui/interactive-image-accordion";
-import { TestimonialCards } from "@/components/ui/testimonial";
+import { BookTestimonial } from "@/components/ui/3d-book-testimonial";
 import Navbar from "@/components/navbar";
 
-// --- Animated Section Wrapper ---
+// --- Animation Wrappers ---
 function FadeInSection({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-80px" });
-
     return (
         <motion.div
             ref={ref}
@@ -34,6 +34,69 @@ function FadeInSection({ children, className = "", delay = 0 }: { children: Reac
         >
             {children}
         </motion.div>
+    );
+}
+
+function SlideInLeft({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true, margin: "-80px" });
+    return (
+        <motion.div
+            ref={ref}
+            initial={{ opacity: 0, x: -60 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.7, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className={className}
+        >
+            {children}
+        </motion.div>
+    );
+}
+
+function ScaleIn({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true, margin: "-80px" });
+    return (
+        <motion.div
+            ref={ref}
+            initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
+            animate={isInView ? { opacity: 1, scale: 1, filter: "blur(0px)" } : {}}
+            transition={{ duration: 0.8, delay }}
+            className={className}
+        >
+            {children}
+        </motion.div>
+    );
+}
+
+// --- Animated Counter ---
+function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true });
+    const springVal = useSpring(0, { stiffness: 50, damping: 20 });
+    const [display, setDisplay] = useState(0);
+
+    useEffect(() => {
+        if (isInView) springVal.set(target);
+    }, [isInView, springVal, target]);
+
+    useEffect(() => {
+        const unsubscribe = springVal.on("change", (v: number) => setDisplay(Math.round(v)));
+        return unsubscribe;
+    }, [springVal]);
+
+    return <span ref={ref}>{display}{suffix}</span>;
+}
+
+// --- Parallax Image ---
+function ParallaxImage({ src, alt, className = "", speed = 50 }: { src: string; alt: string; className?: string; speed?: number }) {
+    const ref = useRef(null);
+    const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+    const y = useTransform(scrollYProgress, [0, 1], [-speed, speed]);
+    return (
+        <div ref={ref} className={`overflow-hidden ${className}`}>
+            <motion.img src={src} alt={alt} className="w-full h-[180%] object-cover" style={{ y }} />
+        </div>
     );
 }
 
@@ -56,86 +119,315 @@ const PROCESS_STEPS = [
 
 // --- Stats ---
 const STATS = [
-    { value: "500+", label: "Families Served" },
-    { value: "15+", label: "Years Experience" },
-    { value: "4.9", label: "Star Rating" },
-    { value: "$200M+", label: "Loans Funded" },
+    { value: 500, suffix: "+", label: "Families Served", prefix: "" },
+    { value: 15, suffix: "+", label: "Years Experience", prefix: "" },
+    { value: 49, suffix: "", label: "Star Rating", prefix: "", display: "4.9" },
+    { value: 200, suffix: "M+", label: "Loans Funded", prefix: "$" },
 ];
+
+// --- Testimonials ---
+const TESTIMONIALS = [
+    {
+        image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=600",
+        name: "Maria & Carlos R.",
+        jobtitle: "First-Time Homebuyers",
+        rating: 5,
+        text: "Supernova made our dream of owning a home a reality. They guided us through every step of the FHA process and found us an incredible rate. We couldn't be happier!",
+    },
+    {
+        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600",
+        name: "David Thompson",
+        jobtitle: "Refinance Client",
+        rating: 5,
+        text: "The refinancing process was seamless. Supernova saved us over $400/month on our mortgage. Their expertise and professionalism are unmatched.",
+    },
+    {
+        image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=600",
+        name: "Ana Gutierrez",
+        jobtitle: "VA Loan Client",
+        rating: 5,
+        text: "As a veteran, I appreciated how knowledgeable the team was about VA loans. Zero down payment and no PMI — they made the entire process stress-free.",
+    },
+    {
+        image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600",
+        name: "James & Lisa P.",
+        jobtitle: "Investment Property",
+        rating: 5,
+        text: "Outstanding service from start to finish. They helped us secure financing for our investment property with the best terms we could find anywhere.",
+    },
+    {
+        image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=600",
+        name: "Robert Chen",
+        jobtitle: "Conventional Loan Client",
+        rating: 5,
+        text: "From pre-approval to closing, Supernova handled everything with professionalism. They found us a rate that beat every other lender we talked to.",
+    },
+    {
+        image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600",
+        name: "Sofia Martinez",
+        jobtitle: "First-Time Homebuyer",
+        rating: 5,
+        text: "I was nervous about buying my first home, but the Supernova team made me feel confident every step of the way. Couldn't recommend them more!",
+    },
+];
+
+// --- CTA Section with Parallax Background ---
+function CtaParallaxSection() {
+    const ref = useRef(null);
+    const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+    const bgY = useTransform(scrollYProgress, [0, 1], [-400, 400]);
+
+    return (
+        <section ref={ref} className="py-32 md:py-40 relative overflow-hidden">
+            <motion.div className="absolute -inset-y-96 inset-x-0" style={{ y: bgY }}>
+                <img
+                    src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&q=80"
+                    alt=""
+                    className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-[#164237]/85" />
+            </motion.div>
+            {/* Floating gold particles */}
+            {[...Array(10)].map((_, i) => (
+                <motion.div
+                    key={i}
+                    className="absolute w-1.5 h-1.5 rounded-full bg-[#d29e4a]/30"
+                    style={{ left: `${10 + i * 8}%`, top: `${20 + (i * 13) % 60}%` }}
+                    animate={{ y: [0, -20, 0], opacity: [0.2, 0.6, 0.2] }}
+                    transition={{ duration: 3 + i * 0.5, repeat: Infinity, ease: "easeInOut" }}
+                />
+            ))}
+            <div className="relative max-w-4xl mx-auto px-6 text-center">
+                <ScaleIn>
+                    <h2 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
+                        Ready to Get Started?
+                    </h2>
+                    <p className="text-lg text-white/60 max-w-xl mx-auto leading-relaxed mb-10">
+                        Your mortgage, elevated. Contact Supernova Mortgage Brokers today for a
+                        free consultation and take the first step toward your dream home.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a
+                            href="#contact"
+                            className="px-8 py-4 text-base font-semibold rounded-full bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] text-[#0e2922] shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-all"
+                        >
+                            Get a Free Quote
+                        </a>
+                        <a
+                            href="tel:3213350399"
+                            className="px-8 py-4 text-base font-semibold rounded-full border-2 border-[#d29e4a]/40 text-white hover:bg-[#d29e4a] hover:text-[#0e2922] transition-all"
+                        >
+                            Call (321) 335-0399
+                        </a>
+                    </div>
+                </ScaleIn>
+            </div>
+        </section>
+    );
+}
 
 export default function HomePage() {
     return (
-        <div className="bg-[#164237] text-white">
+        <div className="bg-black text-white">
             <Navbar />
 
-            {/* ===== HERO SECTION — Scroll Expansion ===== */}
-            <ScrollExpandMedia
-                mediaType="image"
-                mediaSrc="https://images.unsplash.com/photo-1600596542815-ffad4c1539a8?w=1280&q=80"
-                bgImageSrc="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&q=80"
-                title="Your Mortgage, Elevated."
-                date="Supernova Mortgage Brokers"
-                scrollToExpand="Scroll to Explore"
-                textBlend
-            />
+            {/* ===== HERO — Supernova Nebula ===== */}
+            <LivingNebula
+                particleCount={1400}
+                trailLength={0.12}
+                canvasGlow={25}
+                pulseFrequency={0.002}
+                emissionRate={3}
+                className="flex flex-col items-center justify-center text-center px-6"
+            >
+                {/* Overlay content */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-6">
+                    {/* Logo — the epicenter of the blast, explodes from tiny to huge */}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.08, y: 0 }}
+                        animate={{ opacity: 1, scale: 1, y: 65 }}
+                        transition={{
+                            duration: 2,
+                            ease: [0.16, 1, 0.3, 1],
+                            opacity: { duration: 0.4 },
+                        }}
+                        className="relative mb-6"
+                    >
+                        {/* Outer shockwave — big slow ring */}
+                        <motion.div
+                            className="absolute inset-[-80px] rounded-full border-2 border-[#d29e4a]/10"
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: [1, 2.5], opacity: [0.4, 0] }}
+                            transition={{ duration: 3, repeat: Infinity, ease: "easeOut", delay: 1.5 }}
+                        />
+                        {/* Mid shockwave */}
+                        <motion.div
+                            className="absolute inset-[-60px] rounded-full border border-[#e8c47a]/15"
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: [1, 2, 1], opacity: [0.3, 0, 0.3] }}
+                            transition={{ duration: 4, repeat: Infinity, ease: "easeOut", delay: 2 }}
+                        />
+                        {/* Inner shockwave — fast tight ring */}
+                        <motion.div
+                            className="absolute inset-[-30px] rounded-full border border-[#d29e4a]/25"
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: [1, 1.6, 1], opacity: [0.5, 0, 0.5] }}
+                            transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut", delay: 2.5 }}
+                        />
 
-            {/* ===== TRUST BAR ===== */}
-            <section className="bg-[#0e2922] border-y border-[#d29e4a]/10 py-6">
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16">
-                        {TRUST_ITEMS.map((item) => (
-                            <div key={item.label} className="flex items-center gap-3 text-white/40">
-                                <item.icon className="w-5 h-5 text-[#d29e4a]/50" />
-                                <span className="text-sm font-medium">{item.label}</span>
+                        {/* Neon outline glow — traces the logo shape, breathes after blast */}
+                        <motion.div
+                            className="relative z-10"
+                            initial={{ filter: "drop-shadow(0 0 0px rgba(210,158,74,0))" }}
+                            animate={{
+                                filter: [
+                                    "drop-shadow(0 0 15px rgba(210,158,74,1)) drop-shadow(0 0 40px rgba(232,196,122,0.8)) drop-shadow(0 0 80px rgba(210,158,74,0.5)) drop-shadow(0 0 120px rgba(210,158,74,0.3))",
+                                    "drop-shadow(0 0 25px rgba(210,158,74,1)) drop-shadow(0 0 60px rgba(232,196,122,1)) drop-shadow(0 0 110px rgba(210,158,74,0.7)) drop-shadow(0 0 160px rgba(210,158,74,0.4))",
+                                    "drop-shadow(0 0 15px rgba(210,158,74,1)) drop-shadow(0 0 40px rgba(232,196,122,0.8)) drop-shadow(0 0 80px rgba(210,158,74,0.5)) drop-shadow(0 0 120px rgba(210,158,74,0.3))",
+                                ],
+                            }}
+                            transition={{
+                                filter: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 2 },
+                            }}
+                        >
+                            <Image
+                                src="/logo-transparent.png"
+                                alt="Supernova Mortgage Brokers"
+                                width={375}
+                                height={375}
+                                className="mx-auto w-[280px] h-[280px] md:w-[340px] md:h-[340px] lg:w-[375px] lg:h-[375px]"
+                                priority
+                            />
+                        </motion.div>
+                    </motion.div>
+
+                    <motion.h1
+                        className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4"
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 1.8, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                        <span className="text-white" style={{ textShadow: '0 0 20px rgba(255,255,255,0.6), 0 0 50px rgba(255,255,255,0.3), 0 0 100px rgba(255,255,255,0.15)' }}>Your Home Journey,</span>
+                        <br />
+                        <span className="bg-gradient-to-r from-[#d29e4a] via-[#e8c47a] to-[#d29e4a] bg-clip-text text-transparent" style={{ filter: 'drop-shadow(0 0 15px rgba(210,158,74,0.9)) drop-shadow(0 0 40px rgba(232,196,122,0.6)) drop-shadow(0 0 80px rgba(210,158,74,0.4))' }}>
+                            Ignited.
+                        </span>
+                    </motion.h1>
+
+                    <motion.p
+                        className="text-lg md:text-xl text-white/50 max-w-lg mb-10"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.7, delay: 2.3 }}
+                    >
+                        We fuel your path to homeownership with the power of a supernova.
+                    </motion.p>
+
+                    <motion.div
+                        className="flex flex-col sm:flex-row gap-4 mb-16"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, delay: 2.6 }}
+                    >
+                        <a
+                            href="#contact"
+                            className="px-8 py-4 text-sm font-semibold rounded-full bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] text-[#0e2922] shadow-lg shadow-[#d29e4a]/30 hover:shadow-[#d29e4a]/50 hover:-translate-y-0.5 transition-all"
+                        >
+                            Get a Free Quote
+                        </a>
+                        <a
+                            href="tel:3213350399"
+                            className="px-8 py-4 text-sm font-semibold rounded-full border-2 border-[#d29e4a]/40 text-white hover:bg-[#d29e4a] hover:text-[#0e2922] transition-all backdrop-blur-sm"
+                        >
+                            Call (321) 335-0399
+                        </a>
+                    </motion.div>
+                </div>
+
+                {/* Scroll indicator */}
+                <motion.div
+                    className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
+                    animate={{ opacity: [0.3, 0.8, 0.3] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                >
+                    <span className="text-xs text-white/40 tracking-widest uppercase">Scroll</span>
+                    <div className="w-5 h-8 border-2 border-white/20 rounded-full flex justify-center pt-1.5">
+                        <motion.div
+                            className="w-1 h-1.5 bg-[#d29e4a] rounded-full"
+                            animate={{ y: [0, 8, 0] }}
+                            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                        />
+                    </div>
+                </motion.div>
+            </LivingNebula>
+
+            {/* ===== TRUST BAR — White Background Marquee ===== */}
+            <section className="bg-white py-6 border-b border-[#164237]/10 overflow-hidden">
+                <div className="relative">
+                    <motion.div
+                        className="flex items-center gap-16 whitespace-nowrap"
+                        animate={{ x: [0, -800] }}
+                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    >
+                        {[...TRUST_ITEMS, ...TRUST_ITEMS, ...TRUST_ITEMS, ...TRUST_ITEMS].map((item, i) => (
+                            <div key={`${item.label}-${i}`} className="flex items-center gap-3 text-[#164237]/60 flex-shrink-0">
+                                <item.icon className="w-5 h-5 text-[#d29e4a]" />
+                                <span className="text-sm font-semibold tracking-wide">{item.label}</span>
                             </div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
-            {/* ===== PROGRAMS ACCORDION ===== */}
+            {/* ===== PROGRAMS ACCORDION — Dark ===== */}
             <LandingAccordionItem />
 
-            {/* ===== ABOUT ===== */}
-            <section id="about" className="py-24 md:py-32 bg-[#0e2922]">
+            {/* ===== ABOUT — White Background ===== */}
+            <section id="about" className="py-24 md:py-32 bg-white">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                        <FadeInSection>
+                        <ScaleIn>
                             <div className="relative">
-                                <div className="aspect-[4/5] rounded-3xl bg-gradient-to-br from-[#164237] to-[#d29e4a]/30 overflow-hidden">
-                                    <img
+                                <motion.div
+                                    className="aspect-[4/5] rounded-3xl overflow-hidden ring-2 ring-[#d29e4a]/20"
+                                    whileHover={{ rotateY: 3, rotateX: -2 }}
+                                    transition={{ type: "spring", stiffness: 300 }}
+                                    style={{ transformPerspective: 1000 }}
+                                >
+                                    <ParallaxImage
                                         src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80"
                                         alt="Professional mortgage advisor"
-                                        className="w-full h-full object-cover mix-blend-overlay opacity-60"
+                                        className="w-full h-full"
+                                        speed={200}
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-[#0e2922] via-transparent to-transparent" />
-                                </div>
+                                </motion.div>
 
                                 {/* Floating Card */}
-                                <div className="absolute -bottom-6 -right-6 bg-[#164237] border border-[#d29e4a]/20 rounded-2xl p-6 shadow-2xl">
+                                <div className="absolute -bottom-6 -right-6 bg-white border border-[#164237]/10 rounded-2xl p-6 shadow-2xl">
                                     <div className="flex items-center gap-4">
                                         <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#d29e4a] to-[#e8c47a] flex items-center justify-center">
                                             <CheckCircle2 className="w-7 h-7 text-[#0e2922]" />
                                         </div>
                                         <div>
-                                            <p className="text-2xl font-extrabold">15+</p>
-                                            <p className="text-xs text-white/50">Years of Experience</p>
+                                            <p className="text-2xl font-extrabold text-[#164237]">15+</p>
+                                            <p className="text-xs text-[#164237]/50">Years of Experience</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </FadeInSection>
+                        </ScaleIn>
 
-                        <FadeInSection delay={0.2}>
+                        <SlideInLeft delay={0.2}>
                             <p className="text-sm font-bold tracking-[0.2em] text-[#d29e4a] uppercase mb-4">
                                 About Us
                             </p>
-                            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-6">
+                            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-[#164237] mb-6">
                                 Mortgage Solutions That{" "}
                                 <span className="bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] bg-clip-text text-transparent">
                                     Shine Brighter
                                 </span>
                             </h2>
-                            <p className="text-white/50 leading-relaxed mb-8">
+                            <p className="text-[#164237]/60 leading-relaxed mb-8">
                                 At Supernova Mortgage Brokers, we are dedicated to
                                 making your home financing experience smooth, transparent, and
                                 stress-free. Based in Kissimmee, FL, we serve families across
@@ -153,8 +445,8 @@ export default function HomePage() {
                                             <CheckCircle2 className="w-4 h-4 text-[#d29e4a]" />
                                         </div>
                                         <div>
-                                            <h4 className="font-bold mb-1">{item.title}</h4>
-                                            <p className="text-sm text-white/50">{item.desc}</p>
+                                            <h4 className="font-bold mb-1 text-[#164237]">{item.title}</h4>
+                                            <p className="text-sm text-[#164237]/50">{item.desc}</p>
                                         </div>
                                     </div>
                                 ))}
@@ -166,27 +458,42 @@ export default function HomePage() {
                             >
                                 Get in Touch <ArrowRight className="w-4 h-4" />
                             </a>
-                        </FadeInSection>
+                        </SlideInLeft>
                     </div>
                 </div>
             </section>
 
-            {/* ===== STATS ===== */}
-            <section className="py-20 bg-gradient-to-r from-[#164237] via-[#0e2922] to-[#164237] border-y border-[#d29e4a]/10">
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {/* ===== STATS — Bold Gold Background ===== */}
+            <section className="py-16 bg-[#d29e4a] relative overflow-hidden">
+                {/* Diagonal pattern overlay */}
+                <div className="absolute inset-0 opacity-[0.06]" style={{
+                    backgroundImage: "repeating-linear-gradient(45deg, transparent, transparent 10px, #0e2922 10px, #0e2922 20px)"
+                }} />
+                <div className="relative max-w-5xl mx-auto px-6">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 items-center justify-items-center">
                         {STATS.map((stat, i) => (
-                            <FadeInSection key={stat.label} delay={i * 0.1} className="text-center">
-                                <p className="text-4xl md:text-5xl font-extrabold mb-2 bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] bg-clip-text text-transparent">{stat.value}</p>
-                                <p className="text-sm text-white/50">{stat.label}</p>
-                            </FadeInSection>
+                            <motion.div
+                                key={stat.label}
+                                className="text-center"
+                                initial={{ opacity: 0, scale: 0.5, y: 30 }}
+                                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-50px" }}
+                                transition={{ duration: 0.6, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+                                whileHover={{ scale: 1.1, transition: { duration: 0.25 } }}
+                            >
+                                <p className="text-3xl md:text-4xl lg:text-5xl font-black text-[#0e2922] mb-1">
+                                    {stat.prefix}{stat.display ?? <AnimatedCounter target={stat.value} suffix={stat.suffix} />}
+                                    {stat.display && stat.suffix}
+                                </p>
+                                <p className="text-xs font-semibold text-[#0e2922]/60 uppercase tracking-wider">{stat.label}</p>
+                            </motion.div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* ===== PROCESS / HOW IT WORKS ===== */}
-            <section id="process" className="py-24 md:py-32 bg-[#164237]">
+            {/* ===== PROCESS / HOW IT WORKS — Black Background ===== */}
+            <section id="process" className="py-24 md:py-32 bg-black relative">
                 <div className="max-w-7xl mx-auto px-6">
                     <FadeInSection className="text-center mb-16">
                         <p className="text-sm font-bold tracking-[0.2em] text-[#d29e4a] uppercase mb-4">
@@ -202,74 +509,71 @@ export default function HomePage() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {PROCESS_STEPS.map((step, i) => (
-                            <FadeInSection key={step.number} delay={i * 0.15}>
+                            <motion.div
+                                key={step.number}
+                                initial={{ opacity: 0, x: i % 2 === 0 ? -60 : 60 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true, margin: "-80px" }}
+                                transition={{ duration: 0.6, delay: i * 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
+                            >
                                 <div className="relative text-center p-8">
                                     {i < PROCESS_STEPS.length - 1 && (
                                         <div className="hidden lg:block absolute top-12 right-0 w-full h-px bg-gradient-to-r from-[#d29e4a]/20 to-transparent translate-x-1/2" />
                                     )}
-                                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#d29e4a] to-[#e8c47a] flex items-center justify-center mx-auto mb-6 text-lg font-extrabold text-[#0e2922] shadow-lg shadow-[#d29e4a]/20">
+                                    <motion.div
+                                        className="w-20 h-20 rounded-full bg-gradient-to-br from-[#d29e4a] to-[#e8c47a] flex items-center justify-center mx-auto mb-6 text-lg font-extrabold text-[#0e2922] shadow-[0_0_30px_rgba(210,158,74,0.4)]"
+                                        whileInView={{ scale: [0.8, 1.05, 1] }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.6, delay: i * 0.15 }}
+                                    >
                                         {step.number}
-                                    </div>
+                                    </motion.div>
                                     <h3 className="text-lg font-bold mb-3">{step.title}</h3>
                                     <p className="text-sm text-white/50 leading-relaxed">{step.description}</p>
                                 </div>
-                            </FadeInSection>
+                            </motion.div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* ===== TESTIMONIALS ===== */}
-            <TestimonialCards />
-
-            {/* ===== CTA ===== */}
-            <section className="py-24 md:py-32 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#164237] via-[#0e2922] to-[#164237]" />
-                <div className="absolute top-0 right-0 w-96 h-96 bg-[#d29e4a]/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-                <div className="absolute bottom-0 left-0 w-72 h-72 bg-[#d29e4a]/5 rounded-full translate-y-1/2 -translate-x-1/2" />
-
-                <div className="relative max-w-4xl mx-auto px-6 text-center">
-                    <FadeInSection>
-                        <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">
-                            Ready to Get Started?
-                        </h2>
-                        <p className="text-lg text-white/60 max-w-xl mx-auto leading-relaxed mb-10">
-                            Your mortgage, elevated. Contact Supernova Mortgage Brokers today for a
-                            free consultation and take the first step toward your dream home.
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <a
-                                href="#contact"
-                                className="px-8 py-4 text-base font-semibold rounded-full bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] text-[#0e2922] shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-all"
-                            >
-                                Get a Free Quote
-                            </a>
-                            <a
-                                href="tel:3213350399"
-                                className="px-8 py-4 text-base font-semibold rounded-full border-2 border-[#d29e4a]/40 text-white hover:bg-[#d29e4a] hover:text-[#0e2922] transition-all"
-                            >
-                                Call (321) 335-0399
-                            </a>
-                        </div>
-                    </FadeInSection>
+            {/* ===== TESTIMONIALS — Animated Cards Stack on Cream ===== */}
+            <section id="testimonials" className="bg-[#f5f0e8] px-6 py-24 md:py-32">
+                <div className="text-center mb-4">
+                    <p className="text-sm font-bold tracking-[0.2em] text-[#d29e4a] uppercase mb-4">
+                        Testimonials
+                    </p>
+                    <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-[#164237] mb-6">
+                        What Our{" "}
+                        <span className="bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] bg-clip-text text-transparent">
+                            Clients Say
+                        </span>
+                    </h2>
+                    <p className="text-lg text-[#164237]/50 max-w-2xl mx-auto leading-relaxed">
+                        Join hundreds of families who found their dream home with Supernova Mortgage Brokers.
+                    </p>
                 </div>
+                <BookTestimonial testimonials={TESTIMONIALS} />
             </section>
 
-            {/* ===== CONTACT ===== */}
-            <section id="contact" className="py-24 md:py-32 bg-[#0e2922]">
+            {/* ===== CTA — Background Image ===== */}
+            <CtaParallaxSection />
+
+            {/* ===== CONTACT — White Background ===== */}
+            <section id="contact" className="py-24 md:py-32 bg-white">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-                        <FadeInSection>
+                        <SlideInLeft>
                             <p className="text-sm font-bold tracking-[0.2em] text-[#d29e4a] uppercase mb-4">
                                 Contact Us
                             </p>
-                            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-6">
+                            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-[#164237] mb-6">
                                 Let&apos;s Discuss Your{" "}
                                 <span className="bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] bg-clip-text text-transparent">
                                     Mortgage Options
                                 </span>
                             </h2>
-                            <p className="text-white/50 leading-relaxed mb-10">
+                            <p className="text-[#164237]/50 leading-relaxed mb-10">
                                 Whether you&apos;re buying your first home, refinancing, or looking
                                 for investment property financing, we&apos;re here to help.
                             </p>
@@ -286,17 +590,17 @@ export default function HomePage() {
                                             <item.icon className="w-5 h-5 text-[#d29e4a]" />
                                         </div>
                                         <div>
-                                            <p className="font-bold text-sm mb-0.5">{item.label}</p>
-                                            <p className="text-sm text-white/50">{item.value}</p>
+                                            <p className="font-bold text-sm mb-0.5 text-[#164237]">{item.label}</p>
+                                            <p className="text-sm text-[#164237]/50">{item.value}</p>
                                         </div>
                                     </a>
                                 ))}
                             </div>
-                        </FadeInSection>
+                        </SlideInLeft>
 
                         <FadeInSection delay={0.2}>
-                            <div className="bg-white/[0.03] border border-[#d29e4a]/10 rounded-2xl p-8 md:p-10">
-                                <h3 className="text-xl font-bold mb-8">Send Us a Message</h3>
+                            <div className="bg-[#0e2922] rounded-3xl p-8 md:p-10 shadow-2xl">
+                                <h3 className="text-xl font-bold mb-8 text-white">Send Us a Message</h3>
                                 <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                                         <input
@@ -348,6 +652,9 @@ export default function HomePage() {
                     </div>
                 </div>
             </section>
+
+            {/* Gold separator */}
+            <div className="h-px bg-gradient-to-r from-transparent via-[#d29e4a] to-transparent" />
 
             {/* ===== FOOTER ===== */}
             <footer className="bg-black pt-20 pb-8">
@@ -406,10 +713,17 @@ export default function HomePage() {
                         <div>
                             <h4 className="font-bold text-sm mb-6 text-[#d29e4a]">Loan Programs</h4>
                             <ul className="space-y-3">
-                                {["FHA Loans", "VA Loans", "Conventional", "Refinance", "Reverse Mortgage", "Bank Statement"].map((link) => (
-                                    <li key={link}>
-                                        <a href="#services" className="text-sm text-white/40 hover:text-[#d29e4a] transition-colors">
-                                            {link}
+                                {[
+                                    { label: "FHA Loans", href: "/programs/fha-loans" },
+                                    { label: "VA Loans", href: "/programs/va-loans" },
+                                    { label: "Conventional", href: "/programs/conventional" },
+                                    { label: "Cash Out Refinance", href: "/programs/cash-out-refinance" },
+                                    { label: "Reverse Mortgage", href: "/programs/reverse-mortgage" },
+                                    { label: "Bank Statement", href: "/programs/bank-statement" },
+                                ].map((link) => (
+                                    <li key={link.label}>
+                                        <a href={link.href} className="text-sm text-white/40 hover:text-[#d29e4a] transition-colors">
+                                            {link.label}
                                         </a>
                                     </li>
                                 ))}
@@ -440,13 +754,27 @@ export default function HomePage() {
                         </div>
                     </div>
 
+                    {/* Compliance Disclaimer */}
+                    <div className="pt-10 border-t border-[#d29e4a]/10 mt-10">
+                        <p className="text-[10px] text-white/20 leading-relaxed text-center max-w-4xl mx-auto mb-6">
+                            Supernova Mortgage Brokers | NMLS #1880516 | Florida Licensed Mortgage Broker | 600 North Thacker Avenue, Kissimmee, FL 34741 |
+                            Equal Housing Opportunity. All loans are subject to credit approval. Rates, terms, and conditions are subject to change without notice.
+                            This is not a commitment to lend. Not all products are available in all states. Information provided is for educational purposes and does not constitute a loan offer or solicitation.
+                            Actual rates, payments, and costs may vary. Borrowers must qualify based on creditworthiness, income, assets, and property valuation.
+                            Mortgage insurance may be required for certain loan programs. Consult with a licensed mortgage professional for specific program eligibility and terms.
+                        </p>
+                    </div>
+
                     {/* Bottom Bar */}
-                    <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/30">
+                    <div className="pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/30">
                         <p>&copy; 2026 Supernova Mortgage Brokers. NMLS #1880516. All rights reserved.</p>
-                        <div className="flex gap-6">
-                            <a href="#" className="hover:text-[#d29e4a] transition-colors">Privacy Policy</a>
-                            <a href="#" className="hover:text-[#d29e4a] transition-colors">Terms of Service</a>
-                            <a href="#" className="hover:text-[#d29e4a] transition-colors">Equal Housing Lender</a>
+                        <div className="flex items-center gap-6">
+                            <a href="/privacy" className="hover:text-[#d29e4a] transition-colors">Privacy Policy</a>
+                            <a href="/terms" className="hover:text-[#d29e4a] transition-colors">Terms of Service</a>
+                            <span className="flex items-center gap-2">
+                                <img src="/equal-housing.jpg" alt="Equal Housing Opportunity" className="h-6 w-auto opacity-50" />
+                                Equal Housing Opportunity
+                            </span>
                         </div>
                     </div>
                 </div>

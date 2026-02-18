@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle2, ChevronDown } from "lucide-react";
 
 // --- Mortgage Program Data (all 6 programs with full details) ---
@@ -73,18 +74,22 @@ interface AccordionItemProps {
 // --- Desktop Accordion Item Component ---
 function AccordionItem({ item, isActive, onMouseEnter }: AccordionItemProps) {
     return (
-        <div
+        <motion.div
             className={`
-                relative h-[450px] rounded-2xl overflow-hidden cursor-pointer
+                relative h-[550px] rounded-2xl overflow-hidden cursor-pointer
                 transition-all duration-700 ease-in-out
-                ${isActive ? "flex-[4]" : "flex-[0.5]"}
+                ${isActive ? "flex-[4] ring-2 ring-[#d29e4a]/30 shadow-[0_0_40px_rgba(210,158,74,0.15)]" : "flex-[0.5]"}
             `}
             onMouseEnter={onMouseEnter}
+            whileHover={{ scale: isActive ? 1 : 1.02 }}
+            transition={{ type: "spring", stiffness: 300 }}
         >
-            <img
+            <motion.img
                 src={item.imageUrl}
                 alt={item.title}
                 className="absolute inset-0 w-full h-full object-cover"
+                animate={{ scale: isActive ? 1.05 : 1 }}
+                transition={{ duration: 0.8 }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
 
@@ -120,17 +125,18 @@ function AccordionItem({ item, isActive, onMouseEnter }: AccordionItemProps) {
                     ))}
                 </ul>
             </div>
-        </div>
+        </motion.div>
     );
 }
 
 // --- Mobile Card Component ---
 function MobileAccordionCard({ item, isActive, onTap }: { item: AccordionItemData; isActive: boolean; onTap: () => void }) {
     return (
-        <div
-            className="relative rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 ease-in-out"
+        <motion.div
+            className={`relative rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 ease-in-out ${isActive ? "ring-2 ring-[#d29e4a]/30" : ""}`}
             onClick={onTap}
-            style={{ height: isActive ? 280 : 80 }}
+            style={{ height: isActive ? 300 : 80 }}
+            whileTap={{ scale: 0.98 }}
         >
             <img
                 src={item.imageUrl}
@@ -161,7 +167,7 @@ function MobileAccordionCard({ item, isActive, onTap }: { item: AccordionItemDat
                     ))}
                 </ul>
             </div>
-        </div>
+        </motion.div>
     );
 }
 
@@ -170,7 +176,7 @@ export function LandingAccordionItem() {
     const [activeIndex, setActiveIndex] = useState(2);
 
     return (
-        <section id="services" className="bg-[#164237] py-24 md:py-32">
+        <section id="services" className="bg-[#0e2922] py-24 md:py-32">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="flex flex-col lg:flex-row items-center gap-16">
                     {/* Left: Text Content */}
@@ -188,12 +194,15 @@ export function LandingAccordionItem() {
                             From first-time buyers to seasoned investors, explore our full
                             range of loan programs. Hover over each to learn more.
                         </p>
-                        <a
+                        <motion.a
                             href="#contact"
-                            className="inline-flex items-center gap-2 px-8 py-3.5 text-sm font-semibold rounded-full bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] text-[#0e2922] shadow-lg shadow-[#d29e4a]/25 hover:shadow-[#d29e4a]/40 transition-all hover:-translate-y-0.5"
+                            className="inline-flex items-center gap-2 px-8 py-3.5 text-sm font-semibold rounded-full bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] text-[#0e2922] shadow-lg shadow-[#d29e4a]/25"
+                            whileHover={{ y: -2, boxShadow: "0 20px 40px rgba(210,158,74,0.4)" }}
+                            whileTap={{ scale: 0.97 }}
+                            transition={{ type: "spring", stiffness: 400 }}
                         >
                             Get Pre-Qualified <ArrowRight className="w-4 h-4" />
-                        </a>
+                        </motion.a>
                     </div>
 
                     {/* Right: Image Accordion — Desktop */}

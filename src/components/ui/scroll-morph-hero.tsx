@@ -84,7 +84,7 @@ function FlipCard({
             >
                 {/* Front Face */}
                 <div
-                    className="absolute inset-0 h-full w-full overflow-hidden rounded-xl shadow-lg bg-gray-200"
+                    className="absolute inset-0 h-full w-full overflow-hidden rounded-xl shadow-lg bg-[#164237] ring-1 ring-[#d29e4a]/15"
                     style={{ backfaceVisibility: "hidden" }}
                 >
                     <img
@@ -97,12 +97,12 @@ function FlipCard({
 
                 {/* Back Face */}
                 <div
-                    className="absolute inset-0 h-full w-full overflow-hidden rounded-xl shadow-lg bg-gray-900 flex flex-col items-center justify-center p-4 border border-gray-700"
+                    className="absolute inset-0 h-full w-full overflow-hidden rounded-xl shadow-lg bg-[#0e2922] flex flex-col items-center justify-center p-4 border border-[#d29e4a]/20"
                     style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
                 >
                     <div className="text-center">
-                        <p className="text-[7px] font-bold text-blue-400 uppercase tracking-widest mb-1">{label}</p>
-                        <p className="text-[10px] font-medium text-white italic">{tagline}</p>
+                        <p className="text-[7px] font-bold text-[#d29e4a] uppercase tracking-widest mb-1">{label}</p>
+                        <p className="text-[10px] font-medium text-white/80 italic">{tagline}</p>
                     </div>
                 </div>
             </motion.div>
@@ -293,8 +293,8 @@ export default function IntroAnimation() {
                     className="w-full h-full object-cover"
                 />
                 {/* Dark overlay with gradient */}
-                <div className="absolute inset-0 bg-[#0a1628]/75" />
-                <div className="absolute inset-0 bg-gradient-to-b from-[#0a1628]/40 via-transparent to-[#0a1628]/60" />
+                <div className="absolute inset-0 bg-black/75" />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
             </div>
 
             <div className="relative flex h-full w-full flex-col items-center justify-center perspective-1000">
@@ -308,18 +308,17 @@ export default function IntroAnimation() {
                         className="text-lg font-semibold tracking-tight text-white md:text-4xl leading-tight"
                     >
                         <span className="md:hidden flex flex-col items-center gap-1">
-                            <span>The</span>
-                            <span>Right</span>
-                            <span>Loan.</span>
-                            <span className="mt-1 text-sm font-normal tracking-[0.15em] text-white/60">Right Now.</span>
+                            <span>Your</span>
+                            <span>Mortgage,</span>
+                            <span className="bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] bg-clip-text text-transparent">Elevated.</span>
                         </span>
-                        <span className="hidden md:inline">The Right Loan. Right Now.</span>
+                        <span className="hidden md:inline">Your Mortgage, <span className="bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] bg-clip-text text-transparent">Elevated.</span></span>
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0 }}
                         animate={introPhase === "circle" && morphValue < 0.5 ? { opacity: 0.5 - morphValue } : { opacity: 0 }}
                         transition={{ duration: 1, delay: 0.2 }}
-                        className="mt-3 text-[10px] md:text-xs font-bold tracking-[0.2em] text-white/50"
+                        className="mt-3 text-[10px] md:text-xs font-bold tracking-[0.2em] text-[#d29e4a]/60"
                     >
                         SCROLL TO EXPLORE
                     </motion.p>
@@ -330,11 +329,12 @@ export default function IntroAnimation() {
                     style={{ opacity: contentOpacity, y: contentY }}
                     className="absolute top-[10%] z-10 flex flex-col items-center justify-center text-center pointer-events-none px-4"
                 >
-                    <h2 className="text-3xl md:text-5xl font-semibold text-white tracking-tight mb-4">
-                        We Treat Your Mortgage<br className="hidden md:block" /> Like <span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">My Mortgage</span>
+                    <h2 className="text-3xl md:text-6xl font-bold text-white tracking-tight mb-4">
+                        Your Mortgage,{" "}
+                        <span className="bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] bg-clip-text text-transparent">Elevated.</span>
                     </h2>
                     <p className="text-sm md:text-base text-white/60 max-w-lg leading-relaxed">
-                        Personalized loan solutions from a team that puts your goals first. <br className="hidden md:block" />
+                        Supernova Mortgage Brokers — personalized loan solutions from a team that puts your goals first. <br className="hidden md:block" />
                         FHA, VA, Conventional, Refinance — let&apos;s find your perfect fit.
                     </p>
                 </motion.div>

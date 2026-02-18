@@ -119,10 +119,41 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
-    @apply bg-background text-foreground;
   }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Gold text selection */
+::selection {
+  background-color: rgba(210, 158, 74, 0.3);
+  color: white;
+}
+
+/* Range slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d29e4a, #e8c47a);
+  cursor: pointer;
+  border: 2px solid #0e2922;
+  box-shadow: 0 0 10px rgba(210, 158, 74, 0.4);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d29e4a, #e8c47a);
+  cursor: pointer;
+  border: 2px solid #0e2922;
+  box-shadow: 0 0 10px rgba(210, 158, 74, 0.4);
 }
