@@ -43,7 +43,7 @@ export const BookTestimonial = ({ testimonials }: ComponentProps) => {
         onFlip={() => {}}
         onChangeState={() => {}}
         className={''}
-        style={{}}
+        style={{ margin: '0 auto' }}
         startPage={0}
         size={'fixed'}
         minWidth={0}
