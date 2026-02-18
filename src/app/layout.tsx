@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "My Mortgage - Jorge Diaz",
-  description: "Your trusted mortgage professional. Explore loan programs tailored to your needs.",
+  title: "Supernova Mortgage Brokers",
+  description: "Your mortgage, elevated. Explore loan programs tailored to your needs.",
 };
 
 export default function RootLayout({

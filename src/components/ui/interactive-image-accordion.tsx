@@ -81,16 +81,13 @@ function AccordionItem({ item, isActive, onMouseEnter }: AccordionItemProps) {
             `}
             onMouseEnter={onMouseEnter}
         >
-            {/* Background Image */}
             <img
                 src={item.imageUrl}
                 alt={item.title}
                 className="absolute inset-0 w-full h-full object-cover"
             />
-            {/* Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
 
-            {/* Caption */}
             <span
                 className={`
                     absolute text-white font-semibold whitespace-nowrap
@@ -105,7 +102,6 @@ function AccordionItem({ item, isActive, onMouseEnter }: AccordionItemProps) {
                 {item.title}
             </span>
 
-            {/* Details (visible when active) */}
             <div
                 className={`
                     absolute left-6 right-6 transition-all duration-500
@@ -118,7 +114,7 @@ function AccordionItem({ item, isActive, onMouseEnter }: AccordionItemProps) {
                 <ul className="space-y-1.5">
                     {item.features.map((feature) => (
                         <li key={feature} className="flex items-center gap-2 text-sm text-white/80">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[#d29e4a] flex-shrink-0" />
                             {feature}
                         </li>
                     ))}
@@ -143,13 +139,11 @@ function MobileAccordionCard({ item, isActive, onTap }: { item: AccordionItemDat
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
 
-            {/* Title — always visible */}
             <div className="absolute top-0 left-0 right-0 px-5 py-5 flex items-center justify-between">
                 <span className="text-white font-semibold text-lg">{item.title}</span>
-                <ChevronDown className={`w-5 h-5 text-white/70 transition-transform duration-300 ${isActive ? "rotate-180" : ""}`} />
+                <ChevronDown className={`w-5 h-5 text-[#d29e4a]/70 transition-transform duration-300 ${isActive ? "rotate-180" : ""}`} />
             </div>
 
-            {/* Details — visible when active */}
             <div
                 className={`absolute left-5 right-5 bottom-5 transition-all duration-500 ${
                     isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
@@ -161,7 +155,7 @@ function MobileAccordionCard({ item, isActive, onTap }: { item: AccordionItemDat
                 <ul className="space-y-1.5">
                     {item.features.map((feature) => (
                         <li key={feature} className="flex items-center gap-2 text-sm text-white/80">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[#d29e4a] flex-shrink-0" />
                             {feature}
                         </li>
                     ))}
@@ -176,17 +170,17 @@ export function LandingAccordionItem() {
     const [activeIndex, setActiveIndex] = useState(2);
 
     return (
-        <section id="services" className="bg-[#0a1628] py-24 md:py-32">
+        <section id="services" className="bg-[#164237] py-24 md:py-32">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="flex flex-col lg:flex-row items-center gap-16">
                     {/* Left: Text Content */}
                     <div className="w-full lg:w-2/5 text-center lg:text-left">
-                        <p className="text-sm font-bold tracking-[0.2em] text-blue-400 uppercase mb-4">
+                        <p className="text-sm font-bold tracking-[0.2em] text-[#d29e4a] uppercase mb-4">
                             Our Programs
                         </p>
                         <h2 className="text-3xl md:text-5xl font-bold text-white leading-tight tracking-tight mb-6">
                             Mortgage Solutions for{" "}
-                            <span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
+                            <span className="bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] bg-clip-text text-transparent">
                                 Every Need
                             </span>
                         </h2>
@@ -196,7 +190,7 @@ export function LandingAccordionItem() {
                         </p>
                         <a
                             href="#contact"
-                            className="inline-flex items-center gap-2 px-8 py-3.5 text-sm font-semibold rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all hover:-translate-y-0.5"
+                            className="inline-flex items-center gap-2 px-8 py-3.5 text-sm font-semibold rounded-full bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] text-[#0e2922] shadow-lg shadow-[#d29e4a]/25 hover:shadow-[#d29e4a]/40 transition-all hover:-translate-y-0.5"
                         >
                             Get Pre-Qualified <ArrowRight className="w-4 h-4" />
                         </a>
