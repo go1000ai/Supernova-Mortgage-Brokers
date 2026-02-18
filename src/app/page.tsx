@@ -19,6 +19,7 @@ import LivingNebula from "@/components/ui/living-nebula";
 import { LandingAccordionItem } from "@/components/ui/interactive-image-accordion";
 import { BookTestimonial } from "@/components/ui/3d-book-testimonial";
 import Navbar from "@/components/navbar";
+import { useIsMobile } from "@/hooks/use-is-mobile";
 
 // --- Animation Wrappers ---
 function FadeInSection({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
@@ -227,13 +228,15 @@ function CtaParallaxSection() {
 }
 
 export default function HomePage() {
+    const isMobile = useIsMobile();
+
     return (
         <div className="bg-black text-white">
             <Navbar />
 
             {/* ===== HERO — Supernova Nebula ===== */}
             <LivingNebula
-                particleCount={800}
+                particleCount={isMobile ? 300 : 800}
                 trailLength={0.12}
                 canvasGlow={25}
                 pulseFrequency={0.002}
@@ -245,7 +248,7 @@ export default function HomePage() {
                     {/* Logo — the epicenter of the blast, explodes from tiny to huge */}
                     <motion.div
                         initial={{ opacity: 0, scale: 0.08, y: 0 }}
-                        animate={{ opacity: 1, scale: 1, y: 65 }}
+                        animate={{ opacity: 1, scale: 1, y: isMobile ? 30 : 65 }}
                         transition={{
                             duration: 2,
                             ease: [0.16, 1, 0.3, 1],
@@ -268,7 +271,7 @@ export default function HomePage() {
                                 alt="Supernova Mortgage Brokers"
                                 width={375}
                                 height={375}
-                                className="mx-auto w-[280px] h-[280px] md:w-[340px] md:h-[340px] lg:w-[375px] lg:h-[375px]"
+                                className="mx-auto w-[200px] h-[200px] sm:w-[260px] sm:h-[260px] md:w-[340px] md:h-[340px] lg:w-[375px] lg:h-[375px]"
                                 priority
                             />
                         </motion.div>
@@ -381,7 +384,7 @@ export default function HomePage() {
                                 </motion.div>
 
                                 {/* Floating Card */}
-                                <div className="absolute -bottom-4 -right-2 sm:-bottom-6 sm:-right-6 bg-white border border-[#164237]/10 rounded-2xl p-4 sm:p-6 shadow-2xl max-w-[180px] sm:max-w-none">
+                                <div className="absolute -bottom-4 right-0 sm:-bottom-6 sm:-right-6 bg-white border border-[#164237]/10 rounded-2xl p-4 sm:p-6 shadow-2xl max-w-[180px] sm:max-w-none">
                                     <div className="flex items-center gap-3 sm:gap-4">
                                         <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-[#d29e4a] to-[#e8c47a] flex items-center justify-center flex-shrink-0">
                                             <CheckCircle2 className="w-5 h-5 sm:w-7 sm:h-7 text-[#0e2922]" />
@@ -748,8 +751,8 @@ export default function HomePage() {
                         <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6">
                             <a href="/privacy" className="hover:text-[#d29e4a] transition-colors">Privacy Policy</a>
                             <a href="/terms" className="hover:text-[#d29e4a] transition-colors">Terms of Service</a>
-                            <span className="flex items-center gap-2">
-                                <img src="/equal-housing.jpg" alt="Equal Housing Opportunity" className="h-6 w-auto opacity-50" />
+                            <span className="flex items-center gap-2 text-white/30">
+                                <img src="/equal-housing.jpg" alt="Equal Housing Opportunity" className="h-6 w-auto invert opacity-40" />
                                 Equal Housing Opportunity
                             </span>
                         </div>

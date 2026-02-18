@@ -21,7 +21,11 @@ export const BookTestimonial = ({ testimonials }: ComponentProps) => {
   const book = useRef<typeof HTMLFlipBook>(null);
 
   const isSmallScreen = useMediaQuery('(min-width: 640px)');
-  const smallerDevice = isSmallScreen ? false : true;
+  const isVerySmall = useMediaQuery('(max-width: 374px)');
+  const smallerDevice = !isSmallScreen;
+
+  const bookWidth = isVerySmall ? 240 : isSmallScreen ? 300 : 270;
+  const bookHeight = isVerySmall ? 360 : isSmallScreen ? 450 : 400;
 
   const handleFlip = (pageNum: number) => {
     (book.current as any)?.pageFlip()?.flip(pageNum);
@@ -29,15 +33,15 @@ export const BookTestimonial = ({ testimonials }: ComponentProps) => {
   }
 
   return (
-    <div className="w-full text-black h-[500px] flex justify-center items-center py-6 sm:py-10 overflow-hidden mx-auto max-w-full">
+    <div className="w-full text-black h-[420px] sm:h-[500px] flex justify-center items-center py-6 sm:py-10 overflow-hidden mx-auto max-w-full">
       <HTMLFlipBook
         ref={book}
-        width={300}
-        height={450}
+        width={bookWidth}
+        height={bookHeight}
         showCover={true}
         usePortrait={smallerDevice}
-        onFlip={(e) => console.log(e.data)}
-        onChangeState={(e) => console.log(e.data)}
+        onFlip={() => {}}
+        onChangeState={() => {}}
         className={''}
         style={{}}
         startPage={0}
