@@ -197,25 +197,25 @@ function CtaParallaxSection() {
                     transition={{ duration: 3 + i * 0.5, repeat: Infinity, ease: "easeInOut" }}
                 />
             ))}
-            <div className="relative max-w-4xl mx-auto px-6 text-center">
+            <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center">
                 <ScaleIn>
-                    <h2 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
+                    <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight mb-4 sm:mb-6">
                         Ready to Get Started?
                     </h2>
-                    <p className="text-lg text-white/60 max-w-xl mx-auto leading-relaxed mb-10">
+                    <p className="text-base sm:text-lg text-white/60 max-w-xl mx-auto leading-relaxed mb-8 sm:mb-10">
                         Your mortgage, elevated. Contact Supernova Mortgage Brokers today for a
                         free consultation and take the first step toward your dream home.
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 justify-center items-center">
                         <a
                             href="#contact"
-                            className="px-8 py-4 text-base font-semibold rounded-full bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] text-[#0e2922] shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-all"
+                            className="w-full sm:w-auto px-8 py-4 text-base font-semibold rounded-full bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] text-[#0e2922] shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-all text-center"
                         >
                             Get a Free Quote
                         </a>
                         <a
                             href="tel:3213350399"
-                            className="px-8 py-4 text-base font-semibold rounded-full border-2 border-[#d29e4a]/40 text-white hover:bg-[#d29e4a] hover:text-[#0e2922] transition-all"
+                            className="w-full sm:w-auto px-8 py-4 text-base font-semibold rounded-full border-2 border-[#d29e4a]/40 text-white hover:bg-[#d29e4a] hover:text-[#0e2922] transition-all text-center"
                         >
                             Call (321) 335-0399
                         </a>
@@ -302,7 +302,7 @@ export default function HomePage() {
                     </motion.div>
 
                     <motion.h1
-                        className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4"
+                        className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4"
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 1.8, ease: [0.16, 1, 0.3, 1] }}
@@ -315,7 +315,7 @@ export default function HomePage() {
                     </motion.h1>
 
                     <motion.p
-                        className="text-lg md:text-xl text-white/50 max-w-lg mb-10"
+                        className="text-base sm:text-lg md:text-xl text-white/50 max-w-lg mb-8 sm:mb-10"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.7, delay: 2.3 }}
@@ -324,20 +324,20 @@ export default function HomePage() {
                     </motion.p>
 
                     <motion.div
-                        className="flex flex-col sm:flex-row gap-4 mb-16"
+                        className="flex flex-col gap-3 sm:flex-row sm:gap-4 mb-12 sm:mb-16 w-full sm:w-auto"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7, delay: 2.6 }}
                     >
                         <a
                             href="#contact"
-                            className="px-8 py-4 text-sm font-semibold rounded-full bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] text-[#0e2922] shadow-lg shadow-[#d29e4a]/30 hover:shadow-[#d29e4a]/50 hover:-translate-y-0.5 transition-all"
+                            className="px-8 py-4 text-sm font-semibold rounded-full bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] text-[#0e2922] shadow-lg shadow-[#d29e4a]/30 hover:shadow-[#d29e4a]/50 hover:-translate-y-0.5 transition-all text-center"
                         >
                             Get a Free Quote
                         </a>
                         <a
                             href="tel:3213350399"
-                            className="px-8 py-4 text-sm font-semibold rounded-full border-2 border-[#d29e4a]/40 text-white hover:bg-[#d29e4a] hover:text-[#0e2922] transition-all backdrop-blur-sm"
+                            className="px-8 py-4 text-sm font-semibold rounded-full border-2 border-[#d29e4a]/40 text-white hover:bg-[#d29e4a] hover:text-[#0e2922] transition-all backdrop-blur-sm text-center"
                         >
                             Call (321) 335-0399
                         </a>
@@ -383,9 +383,9 @@ export default function HomePage() {
             <LandingAccordionItem />
 
             {/* ===== ABOUT — White Background ===== */}
-            <section id="about" className="py-24 md:py-32 bg-white">
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <section id="about" className="py-16 sm:py-24 md:py-32 bg-white">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16 items-center">
                         <ScaleIn>
                             <div className="relative">
                                 <motion.div
@@ -403,14 +403,14 @@ export default function HomePage() {
                                 </motion.div>
 
                                 {/* Floating Card */}
-                                <div className="absolute -bottom-6 -right-6 bg-white border border-[#164237]/10 rounded-2xl p-6 shadow-2xl">
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#d29e4a] to-[#e8c47a] flex items-center justify-center">
-                                            <CheckCircle2 className="w-7 h-7 text-[#0e2922]" />
+                                <div className="absolute -bottom-4 -right-2 sm:-bottom-6 sm:-right-6 bg-white border border-[#164237]/10 rounded-2xl p-4 sm:p-6 shadow-2xl max-w-[180px] sm:max-w-none">
+                                    <div className="flex items-center gap-3 sm:gap-4">
+                                        <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-[#d29e4a] to-[#e8c47a] flex items-center justify-center flex-shrink-0">
+                                            <CheckCircle2 className="w-5 h-5 sm:w-7 sm:h-7 text-[#0e2922]" />
                                         </div>
                                         <div>
-                                            <p className="text-2xl font-extrabold text-[#164237]">15+</p>
-                                            <p className="text-xs text-[#164237]/50">Years of Experience</p>
+                                            <p className="text-xl sm:text-2xl font-extrabold text-[#164237]">15+</p>
+                                            <p className="text-[10px] sm:text-xs text-[#164237]/50">Years of Experience</p>
                                         </div>
                                     </div>
                                 </div>
@@ -493,8 +493,8 @@ export default function HomePage() {
             </section>
 
             {/* ===== PROCESS / HOW IT WORKS — Black Background ===== */}
-            <section id="process" className="py-24 md:py-32 bg-black relative">
-                <div className="max-w-7xl mx-auto px-6">
+            <section id="process" className="py-16 sm:py-24 md:py-32 bg-black relative">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6">
                     <FadeInSection className="text-center mb-16">
                         <p className="text-sm font-bold tracking-[0.2em] text-[#d29e4a] uppercase mb-4">
                             How It Works
@@ -538,7 +538,7 @@ export default function HomePage() {
             </section>
 
             {/* ===== TESTIMONIALS — Animated Cards Stack on Cream ===== */}
-            <section id="testimonials" className="bg-[#f5f0e8] px-6 py-24 md:py-32">
+            <section id="testimonials" className="bg-[#f5f0e8] px-4 sm:px-6 py-16 sm:py-24 md:py-32">
                 <div className="text-center mb-4">
                     <p className="text-sm font-bold tracking-[0.2em] text-[#d29e4a] uppercase mb-4">
                         Testimonials
@@ -560,9 +560,9 @@ export default function HomePage() {
             <CtaParallaxSection />
 
             {/* ===== CONTACT — White Background ===== */}
-            <section id="contact" className="py-24 md:py-32 bg-white">
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            <section id="contact" className="py-16 sm:py-24 md:py-32 bg-white">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16">
                         <SlideInLeft>
                             <p className="text-sm font-bold tracking-[0.2em] text-[#d29e4a] uppercase mb-4">
                                 Contact Us
@@ -657,8 +657,8 @@ export default function HomePage() {
             <div className="h-px bg-gradient-to-r from-transparent via-[#d29e4a] to-transparent" />
 
             {/* ===== FOOTER ===== */}
-            <footer className="bg-black pt-20 pb-8">
-                <div className="max-w-7xl mx-auto px-6">
+            <footer className="bg-black pt-12 sm:pt-20 pb-8">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 pb-16 border-b border-[#d29e4a]/10">
                         {/* Brand */}
                         <div className="lg:col-span-1">
@@ -766,9 +766,8 @@ export default function HomePage() {
                     </div>
 
                     {/* Bottom Bar */}
-                    <div className="pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/30">
-                        <p>&copy; 2026 Supernova Mortgage Brokers. NMLS #1880516. All rights reserved.</p>
-                        <div className="flex items-center gap-6">
+                    <div className="pt-6 flex flex-col items-center gap-4 text-xs text-white/30 text-center">
+                        <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6">
                             <a href="/privacy" className="hover:text-[#d29e4a] transition-colors">Privacy Policy</a>
                             <a href="/terms" className="hover:text-[#d29e4a] transition-colors">Terms of Service</a>
                             <span className="flex items-center gap-2">
@@ -776,6 +775,7 @@ export default function HomePage() {
                                 Equal Housing Opportunity
                             </span>
                         </div>
+                        <p>&copy; 2026 Supernova Mortgage Brokers. NMLS #1880516. All rights reserved.</p>
                     </div>
                 </div>
             </footer>

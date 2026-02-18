@@ -29,7 +29,7 @@ export const BookTestimonial = ({ testimonials }: ComponentProps) => {
   }
 
   return (
-    <div className="w-full text-black h-[500px] flex justify-center items-center py-10">
+    <div className="w-full text-black h-[500px] flex justify-center items-center py-6 sm:py-10 overflow-hidden mx-auto max-w-full">
       <HTMLFlipBook
         ref={book}
         width={300}

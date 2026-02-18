@@ -53,11 +53,11 @@ function ResultCard({ label, value, sub }: { label: string; value: string; sub?:
         <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="bg-gradient-to-br from-[#d29e4a]/10 to-[#d29e4a]/5 border border-[#d29e4a]/20 rounded-xl p-4 text-center"
+            className="bg-gradient-to-br from-[#d29e4a]/10 to-[#d29e4a]/5 border border-[#d29e4a]/20 rounded-xl p-3 sm:p-4 text-center"
         >
-            <p className="text-xs text-white/50 mb-1">{label}</p>
-            <p className="text-xl md:text-2xl font-bold bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] bg-clip-text text-transparent">{value}</p>
-            {sub && <p className="text-[10px] text-white/30 mt-1">{sub}</p>}
+            <p className="text-[10px] sm:text-xs text-white/50 mb-1">{label}</p>
+            <p className="text-base sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] bg-clip-text text-transparent break-all">{value}</p>
+            {sub && <p className="text-[9px] sm:text-[10px] text-white/30 mt-1">{sub}</p>}
         </motion.div>
     );
 }
@@ -310,8 +310,8 @@ export default function MortgageCalculators() {
     return (
         <div className="w-full">
             {/* Tab Selector */}
-            <div className="flex justify-center mb-8">
-                <div className="inline-flex bg-white/5 rounded-full p-1 border border-[#d29e4a]/10">
+            <div className="flex justify-center mb-6 sm:mb-8 px-2">
+                <div className="flex flex-col sm:flex-row w-full sm:w-auto sm:inline-flex bg-white/5 rounded-2xl sm:rounded-full p-1.5 sm:p-1 border border-[#d29e4a]/10 gap-1 sm:gap-0">
                     {TABS.map((tab) => {
                         const Icon = tab.icon;
                         const isActive = activeTab === tab.id;
@@ -319,14 +319,14 @@ export default function MortgageCalculators() {
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
-                                className={`relative flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                                className={`relative flex items-center justify-center gap-2 px-5 py-3 sm:py-2.5 rounded-xl sm:rounded-full text-sm font-medium transition-all duration-300 ${
                                     isActive ? "text-[#0e2922]" : "text-white/50 hover:text-white/70"
                                 }`}
                             >
                                 {isActive && (
                                     <motion.div
                                         layoutId="activePill"
-                                        className="absolute inset-0 bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] rounded-full"
+                                        className="absolute inset-0 bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] rounded-xl sm:rounded-full"
                                         transition={{ type: "spring", stiffness: 400, damping: 30 }}
                                     />
                                 )}

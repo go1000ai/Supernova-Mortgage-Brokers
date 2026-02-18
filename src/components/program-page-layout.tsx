@@ -98,7 +98,7 @@ export default function ProgramPageLayout({
             <Navbar />
 
             {/* ===== HERO ===== */}
-            <section ref={heroRef} className="relative min-h-[85vh] flex items-center overflow-hidden">
+            <section ref={heroRef} className="relative min-h-[70vh] sm:min-h-[85vh] flex items-center overflow-hidden">
                 <motion.div className="absolute inset-0" style={{ y: heroY }}>
                     <Image
                         src={heroImage}
@@ -113,14 +113,14 @@ export default function ProgramPageLayout({
                 </motion.div>
 
                 <motion.div
-                    className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20"
+                    className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-24 sm:pt-32 pb-12 sm:pb-20"
                     style={{ opacity: heroOpacity }}
                 >
                     <motion.p
                         initial={{ opacity: 0, x: -30 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6, delay: 0.3 }}
-                        className="text-sm font-bold tracking-[0.2em] text-[#d29e4a] uppercase mb-4"
+                        className="text-xs sm:text-sm font-bold tracking-[0.2em] text-[#d29e4a] uppercase mb-3 sm:mb-4"
                     >
                         {subtitle}
                     </motion.p>
@@ -128,7 +128,7 @@ export default function ProgramPageLayout({
                         initial={{ opacity: 0, y: 40 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                        className="text-5xl md:text-7xl font-bold tracking-tight mb-6 max-w-3xl"
+                        className="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-4 sm:mb-6 max-w-3xl"
                     >
                         {title.split(" ").slice(0, -1).join(" ")}{" "}
                         <span className="bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] bg-clip-text text-transparent">
@@ -139,7 +139,7 @@ export default function ProgramPageLayout({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.6, delay: 0.8 }}
-                        className="text-lg text-white/50 max-w-2xl mb-10 leading-relaxed"
+                        className="text-base sm:text-lg text-white/50 max-w-2xl mb-8 sm:mb-10 leading-relaxed"
                     >
                         {description}
                     </motion.p>
@@ -147,17 +147,17 @@ export default function ProgramPageLayout({
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 1 }}
-                        className="flex flex-col sm:flex-row gap-4"
+                        className="flex flex-col gap-3 sm:flex-row sm:gap-4"
                     >
                         <a
                             href="/#contact"
-                            className="px-8 py-4 text-sm font-semibold rounded-full bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] text-[#0e2922] shadow-lg shadow-[#d29e4a]/30 hover:shadow-[#d29e4a]/50 hover:-translate-y-0.5 transition-all inline-flex items-center gap-2"
+                            className="px-8 py-4 text-sm font-semibold rounded-full bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] text-[#0e2922] shadow-lg shadow-[#d29e4a]/30 hover:shadow-[#d29e4a]/50 hover:-translate-y-0.5 transition-all inline-flex items-center justify-center gap-2 text-center"
                         >
                             {ctaText} <ArrowRight className="w-4 h-4" />
                         </a>
                         <a
                             href="tel:3213350399"
-                            className="px-8 py-4 text-sm font-semibold rounded-full border-2 border-[#d29e4a]/40 text-white hover:bg-[#d29e4a] hover:text-[#0e2922] transition-all inline-flex items-center gap-2"
+                            className="px-8 py-4 text-sm font-semibold rounded-full border-2 border-[#d29e4a]/40 text-white hover:bg-[#d29e4a] hover:text-[#0e2922] transition-all inline-flex items-center justify-center gap-2 text-center"
                         >
                             <Phone className="w-4 h-4" /> Call (321) 335-0399
                         </a>
@@ -182,9 +182,9 @@ export default function ProgramPageLayout({
             </section>
 
             {/* ===== KEY BENEFITS ===== */}
-            <section className="py-20 relative overflow-hidden">
+            <section className="py-14 sm:py-20 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-b from-black via-[#0e2922]/30 to-black" />
-                <div className="relative max-w-7xl mx-auto px-6">
+                <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
                     <FadeIn className="text-center mb-16">
                         <p className="text-sm font-bold tracking-[0.2em] text-[#d29e4a] uppercase mb-4">Benefits</p>
                         <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
@@ -215,8 +215,8 @@ export default function ProgramPageLayout({
             </section>
 
             {/* ===== FEATURES DETAIL ===== */}
-            <section className="py-20 bg-[#f5f0e8]">
-                <div className="max-w-7xl mx-auto px-6">
+            <section className="py-14 sm:py-20 bg-[#f5f0e8]">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6">
                     <FadeIn className="text-center mb-16">
                         <p className="text-sm font-bold tracking-[0.2em] text-[#d29e4a] uppercase mb-4">Program Details</p>
                         <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-[#164237]">
@@ -249,8 +249,8 @@ export default function ProgramPageLayout({
             </section>
 
             {/* ===== ELIGIBILITY ===== */}
-            <section className="py-20 relative overflow-hidden">
-                <div className="max-w-5xl mx-auto px-6">
+            <section className="py-14 sm:py-20 relative overflow-hidden">
+                <div className="max-w-5xl mx-auto px-4 sm:px-6">
                     <FadeIn className="text-center mb-16">
                         <p className="text-sm font-bold tracking-[0.2em] text-[#d29e4a] uppercase mb-4">Eligibility</p>
                         <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
@@ -280,8 +280,8 @@ export default function ProgramPageLayout({
             </section>
 
             {/* ===== FAQ ===== */}
-            <section className="py-20 bg-[#0e2922]">
-                <div className="max-w-4xl mx-auto px-6">
+            <section className="py-14 sm:py-20 bg-[#0e2922]">
+                <div className="max-w-4xl mx-auto px-4 sm:px-6">
                     <FadeIn className="text-center mb-16">
                         <p className="text-sm font-bold tracking-[0.2em] text-[#d29e4a] uppercase mb-4">FAQ</p>
                         <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
@@ -299,28 +299,28 @@ export default function ProgramPageLayout({
             </section>
 
             {/* ===== CTA ===== */}
-            <section className="py-24 relative overflow-hidden">
+            <section className="py-16 sm:py-24 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-[#d29e4a]/10 via-transparent to-[#d29e4a]/10" />
-                <div className="relative max-w-4xl mx-auto px-6 text-center">
+                <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center">
                     <FadeIn>
-                        <h2 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
+                        <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight mb-4 sm:mb-6">
                             Ready to{" "}
                             <span className="bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] bg-clip-text text-transparent">Apply?</span>
                         </h2>
-                        <p className="text-lg text-white/50 max-w-xl mx-auto leading-relaxed mb-10">
+                        <p className="text-base sm:text-lg text-white/50 max-w-xl mx-auto leading-relaxed mb-8 sm:mb-10">
                             Our team at Supernova Mortgage Brokers is ready to guide you through every step.
                             Get your personalized rate quote in minutes.
                         </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 justify-center items-center">
                             <a
                                 href="/#contact"
-                                className="px-8 py-4 text-base font-semibold rounded-full bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] text-[#0e2922] shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-all"
+                                className="w-full sm:w-auto px-8 py-4 text-base font-semibold rounded-full bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] text-[#0e2922] shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-all text-center"
                             >
                                 Get a Free Quote
                             </a>
                             <a
                                 href="tel:3213350399"
-                                className="px-8 py-4 text-base font-semibold rounded-full border-2 border-[#d29e4a]/40 text-white hover:bg-[#d29e4a] hover:text-[#0e2922] transition-all"
+                                className="w-full sm:w-auto px-8 py-4 text-base font-semibold rounded-full border-2 border-[#d29e4a]/40 text-white hover:bg-[#d29e4a] hover:text-[#0e2922] transition-all text-center"
                             >
                                 Call (321) 335-0399
                             </a>
@@ -330,18 +330,18 @@ export default function ProgramPageLayout({
             </section>
 
             {/* ===== COMPLIANCE FOOTER ===== */}
-            <footer className="bg-[#0e2922] py-12 border-t border-[#d29e4a]/10">
-                <div className="max-w-5xl mx-auto px-6 text-center space-y-6">
+            <footer className="bg-[#0e2922] py-10 sm:py-12 border-t border-[#d29e4a]/10">
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center space-y-5 sm:space-y-6">
                     <a href="/" className="inline-block">
-                        <img src="/logo.png" alt="Supernova Mortgage Brokers" className="h-12 mx-auto" />
+                        <img src="/logo.png" alt="Supernova Mortgage Brokers" className="h-10 sm:h-12 mx-auto" />
                     </a>
-                    <p className="text-xs text-white/30 leading-relaxed max-w-3xl mx-auto">
+                    <p className="text-[10px] sm:text-xs text-white/30 leading-relaxed max-w-3xl mx-auto">
                         Supernova Mortgage Brokers | NMLS #1880516 | 600 North Thacker Avenue, Kissimmee, FL 34741 |
                         Equal Housing Opportunity. All loans are subject to credit approval. Rates, terms, and conditions
                         are subject to change without notice. This is not a commitment to lend. Restrictions may apply.
                         Information is intended for mortgage professionals only. Not all products are available in all states.
                     </p>
-                    <div className="flex justify-center items-center gap-6 text-xs text-white/30">
+                    <div className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-3 sm:gap-6 text-xs text-white/30">
                         <a href="/privacy" className="hover:text-[#d29e4a] transition-colors">Privacy Policy</a>
                         <a href="/terms" className="hover:text-[#d29e4a] transition-colors">Terms of Service</a>
                         <a href="/" className="hover:text-[#d29e4a] transition-colors">Home</a>
@@ -350,7 +350,7 @@ export default function ProgramPageLayout({
                             Equal Housing Opportunity
                         </span>
                     </div>
-                    <p className="text-xs text-white/20">&copy; 2026 Supernova Mortgage Brokers. All rights reserved.</p>
+                    <p className="text-[10px] sm:text-xs text-white/20">&copy; 2026 Supernova Mortgage Brokers. All rights reserved.</p>
                 </div>
             </footer>
         </div>
