@@ -309,9 +309,22 @@ export default function HomePage() {
                     >
                         <span className="text-white" style={{ textShadow: '0 0 20px rgba(255,255,255,0.6), 0 0 50px rgba(255,255,255,0.3), 0 0 100px rgba(255,255,255,0.15)' }}>Your Home Journey,</span>
                         <br />
-                        <span className="bg-gradient-to-r from-[#d29e4a] via-[#e8c47a] to-[#d29e4a] bg-clip-text text-transparent" style={{ filter: 'drop-shadow(0 0 15px rgba(210,158,74,0.9)) drop-shadow(0 0 40px rgba(232,196,122,0.6)) drop-shadow(0 0 80px rgba(210,158,74,0.4))' }}>
-                            Ignited.
-                        </span>
+                        <motion.span
+                            className="relative inline-block"
+                            animate={{
+                                filter: [
+                                    'drop-shadow(0 0 20px rgba(210,158,74,0.9)) drop-shadow(0 0 50px rgba(232,196,122,0.6))',
+                                    'drop-shadow(0 0 35px rgba(210,158,74,1)) drop-shadow(0 0 80px rgba(232,196,122,0.9)) drop-shadow(0 0 120px rgba(210,158,74,0.5))',
+                                    'drop-shadow(0 0 20px rgba(210,158,74,0.9)) drop-shadow(0 0 50px rgba(232,196,122,0.6))',
+                                ],
+                            }}
+                            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                        >
+                            <span className="absolute inset-0 bg-gradient-to-r from-[#d29e4a]/20 via-[#e8c47a]/30 to-[#d29e4a]/20 blur-2xl rounded-full scale-150" />
+                            <span className="relative bg-gradient-to-r from-[#d29e4a] via-[#f5d98a] to-[#d29e4a] bg-clip-text text-transparent" style={{ WebkitTextStroke: '1px rgba(210,158,74,0.3)' }}>
+                                Ignited.
+                            </span>
+                        </motion.span>
                     </motion.h1>
 
                     <motion.p
