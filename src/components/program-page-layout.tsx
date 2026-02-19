@@ -156,10 +156,10 @@ export default function ProgramPageLayout({
                             {ctaText} <ArrowRight className="w-4 h-4" />
                         </a>
                         <a
-                            href="tel:3213350399"
+                            href="tel:6892424400"
                             className="px-8 py-4 text-sm font-semibold rounded-full border-2 border-[#d29e4a]/40 text-white hover:bg-[#d29e4a] hover:text-[#0e2922] transition-all inline-flex items-center justify-center gap-2 text-center"
                         >
-                            <Phone className="w-4 h-4" /> Call (321) 335-0399
+                            <Phone className="w-4 h-4" /> Call (689) 242-4400
                         </a>
                     </motion.div>
                 </motion.div>
@@ -319,10 +319,10 @@ export default function ProgramPageLayout({
                                 Get a Free Quote
                             </a>
                             <a
-                                href="tel:3213350399"
+                                href="tel:6892424400"
                                 className="w-full sm:w-auto px-8 py-4 text-base font-semibold rounded-full border-2 border-[#d29e4a]/40 text-white hover:bg-[#d29e4a] hover:text-[#0e2922] transition-all text-center"
                             >
-                                Call (321) 335-0399
+                                Call (689) 242-4400
                             </a>
                         </div>
                     </FadeIn>

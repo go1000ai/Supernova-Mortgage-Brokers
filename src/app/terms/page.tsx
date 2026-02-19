@@ -452,7 +452,7 @@ export default function TermsOfServicePage() {
                 </span>{" "}
                 You have the right to request paper copies of any electronic
                 communication. To request paper copies, contact us at
-                info@supernovamortgage.com or call (321) 335-0399. There may be
+                info@supernovamortgage.com or call (689) 242-4400. There may be
                 a fee for providing paper copies.
               </p>
             </div>
@@ -505,7 +505,7 @@ export default function TermsOfServicePage() {
                 </span>{" "}
                 You may revoke your consent to receive calls or text messages at
                 any time by replying &quot;STOP&quot; to any text message, by
-                calling us at (321) 335-0399, or by emailing
+                calling us at (689) 242-4400, or by emailing
                 info@supernovamortgage.com with the subject line &quot;Opt-Out.&quot;
                 Opting out of marketing communications will not affect
                 transactional communications related to an active loan
@@ -796,10 +796,10 @@ export default function TermsOfServicePage() {
                   <p>
                     Phone:{" "}
                     <a
-                      href="tel:3213350399"
+                      href="tel:6892424400"
                       className="text-[#e8c47a] hover:text-[#d29e4a] transition-colors"
                     >
-                      (321) 335-0399
+                      (689) 242-4400
                     </a>
                   </p>
                   <p>

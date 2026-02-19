@@ -467,10 +467,10 @@ export default function PrivacyPolicyPage() {
                     To limit our sharing for marketing purposes, you may contact
                     us by phone at{" "}
                     <a
-                      href="tel:3213350399"
+                      href="tel:6892424400"
                       className="text-[#e8c47a] hover:text-[#d29e4a] transition-colors"
                     >
-                      (321) 335-0399
+                      (689) 242-4400
                     </a>{" "}
                     or email us at{" "}
                     <a
@@ -711,7 +711,7 @@ export default function PrivacyPolicyPage() {
                     You may opt out of receiving marketing communications at any
                     time by: clicking the &quot;unsubscribe&quot; link in any marketing
                     email; replying &quot;STOP&quot; to any marketing text message;
-                    calling us at (321) 335-0399; or emailing us at
+                    calling us at (689) 242-4400; or emailing us at
                     info@supernovamortgage.com. Please note that opting out of
                     marketing does not affect transactional communications
                     related to your loan application or account.
@@ -724,7 +724,7 @@ export default function PrivacyPolicyPage() {
                   </h4>
                   <p className="text-white/60 text-sm">
                     You may request to be placed on our internal Do Not Call list
-                    by contacting us at (321) 335-0399 or by emailing
+                    by contacting us at (689) 242-4400 or by emailing
                     info@supernovamortgage.com. We will process your request
                     within a reasonable timeframe and in compliance with the
                     National Do Not Call Registry and applicable state Do Not Call
@@ -1038,10 +1038,10 @@ export default function PrivacyPolicyPage() {
                   <p>
                     <span className="text-white/70 font-medium">Phone:</span>{" "}
                     <a
-                      href="tel:3213350399"
+                      href="tel:6892424400"
                       className="text-[#e8c47a] hover:text-[#d29e4a] transition-colors"
                     >
-                      (321) 335-0399
+                      (689) 242-4400
                     </a>
                   </p>
                   <p>
