@@ -135,7 +135,7 @@ export default function TermsOfServicePage() {
                 </div>
               </div>
               <p>
-                Supernova Mortgage Brokers is an Equal Housing Opportunity lender.
+                Supernova Mortgage Brokers is an Equal Opportunity Lender lender.
                 We do not engage in business practices that discriminate on the
                 basis of race, color, religion, national origin, sex, marital
                 status, age (provided the applicant has the capacity to enter
@@ -163,10 +163,9 @@ export default function TermsOfServicePage() {
                   />
                 </svg>
                 <span>
-                  Equal Housing Opportunity. All loans are subject to credit
-                  approval. Supernova Mortgage Brokers is not a lender; we
-                  operate as a mortgage broker arranging loans through third-party
-                  lenders.
+                  Equal Opportunity Lender. All loans are subject to credit
+                  approval. Supernova Mortgage Brokers is a division of My
+                  Mortgage, Inc., a mortgage lender.
                 </span>
               </div>
             </div>
@@ -863,7 +862,7 @@ export default function TermsOfServicePage() {
                 &copy; 2026 Supernova Mortgage Brokers. NMLS #1880516. All
                 rights reserved.
               </p>
-              <p className="mt-1">Equal Housing Opportunity.</p>
+              <p className="mt-1">Equal Opportunity Lender.</p>
               <p className="mt-1">My Mortgage, Inc. doing business as Supernova Mortgage Brokers.</p>
             </div>
           </div>

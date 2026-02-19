@@ -337,7 +337,7 @@ export default function ProgramPageLayout({
                     </a>
                     <p className="text-[10px] sm:text-xs text-white/30 leading-relaxed max-w-3xl mx-auto">
                         Supernova Mortgage Brokers | NMLS #1880516 | 600 North Thacker Avenue, Kissimmee, FL 34741 |
-                        Equal Housing Opportunity. All loans are subject to credit approval. Rates, terms, and conditions
+                        Equal Opportunity Lender. All loans are subject to credit approval. Rates, terms, and conditions
                         are subject to change without notice. This is not a commitment to lend. Restrictions may apply.
                         Information is intended for mortgage professionals only. Not all products are available in all states.
                     </p>
@@ -349,8 +349,8 @@ export default function ProgramPageLayout({
                         <a href="/terms" className="hover:text-[#d29e4a] transition-colors">Terms of Service</a>
                         <a href="/" className="hover:text-[#d29e4a] transition-colors">Home</a>
                         <span className="flex items-center gap-2">
-                            <img src="/equal-housing.jpg" alt="Equal Housing Opportunity" className="h-6 w-auto opacity-50" />
-                            Equal Housing Opportunity
+                            <img src="/equal-housing.jpg" alt="Equal Opportunity Lender" className="h-6 w-auto opacity-50" />
+                            Equal Opportunity Lender
                         </span>
                     </div>
                     <p className="text-[10px] sm:text-xs text-white/20">&copy; 2026 Supernova Mortgage Brokers. All rights reserved.</p>

@@ -1178,7 +1178,7 @@ export default function PrivacyPolicyPage() {
 
                 <div className="border-t border-[#d29e4a]/10 pt-4">
                   <h4 className="text-[#d29e4a] font-semibold mb-3">
-                    Equal Housing Opportunity
+                    Equal Opportunity Lender
                   </h4>
                   <div className="flex items-start gap-3">
                     <svg
@@ -1196,7 +1196,7 @@ export default function PrivacyPolicyPage() {
                       />
                     </svg>
                     <p className="text-white/50 text-sm">
-                      Supernova Mortgage Brokers is an Equal Housing Opportunity
+                      Supernova Mortgage Brokers is an Equal Opportunity Lender
                       lender. We are committed to complying with all federal,
                       state, and local fair lending laws and regulations,
                       including the Equal Credit Opportunity Act (ECOA) and the
@@ -1295,7 +1295,7 @@ export default function PrivacyPolicyPage() {
                 &copy; 2026 Supernova Mortgage Brokers. NMLS #1880516. All
                 rights reserved.
               </p>
-              <p className="mt-1">Equal Housing Opportunity.</p>
+              <p className="mt-1">Equal Opportunity Lender.</p>
               <p className="mt-1">My Mortgage, Inc. doing business as Supernova Mortgage Brokers.</p>
             </div>
           </div>

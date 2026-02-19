@@ -738,8 +738,8 @@ export default function HomePage() {
                     {/* Compliance Disclaimer */}
                     <div className="pt-10 border-t border-[#d29e4a]/10 mt-10">
                         <p className="text-[10px] text-white/20 leading-relaxed text-center max-w-4xl mx-auto mb-6">
-                            Supernova Mortgage Brokers | NMLS #1880516 | Florida Licensed Mortgage Broker | 600 North Thacker Avenue, Kissimmee, FL 34741 |
-                            Equal Housing Opportunity. All loans are subject to credit approval. Rates, terms, and conditions are subject to change without notice.
+                            Supernova Mortgage Brokers | NMLS #1880516 | Florida Licensed Mortgage Lender | 600 North Thacker Avenue, Kissimmee, FL 34741 |
+                            Equal Opportunity Lender. All loans are subject to credit approval. Rates, terms, and conditions are subject to change without notice.
                             This is not a commitment to lend. Not all products are available in all states. Information provided is for educational purposes and does not constitute a loan offer or solicitation.
                             Actual rates, payments, and costs may vary. Borrowers must qualify based on creditworthiness, income, assets, and property valuation.
                             Mortgage insurance may be required for certain loan programs. Consult with a licensed mortgage professional for specific program eligibility and terms.
@@ -755,8 +755,8 @@ export default function HomePage() {
                             <a href="/privacy" className="hover:text-[#d29e4a] transition-colors">Privacy Policy</a>
                             <a href="/terms" className="hover:text-[#d29e4a] transition-colors">Terms of Service</a>
                             <span className="flex items-center gap-2 text-white/30">
-                                <img src="/equal-housing.jpg" alt="Equal Housing Opportunity" className="h-6 w-auto invert opacity-40" />
-                                Equal Housing Opportunity
+                                <img src="/equal-housing.jpg" alt="Equal Opportunity Lender" className="h-6 w-auto invert opacity-40" />
+                                Equal Opportunity Lender
                             </span>
                         </div>
                         <p>&copy; 2026 Supernova Mortgage Brokers. NMLS #1880516. All rights reserved.</p>

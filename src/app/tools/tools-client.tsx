@@ -100,7 +100,7 @@ export default function ToolsPageClient() {
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-4">
                     <p className="text-[10px] text-white/20 leading-relaxed">
                         Supernova Mortgage Brokers | NMLS #1880516 | 600 North Thacker Avenue, Kissimmee, FL 34741 |
-                        Equal Housing Opportunity. These calculators are for illustrative purposes only and do not constitute
+                        Equal Opportunity Lender. These calculators are for illustrative purposes only and do not constitute
                         a loan offer or commitment to lend. Actual rates, payments, and terms may vary.
                     </p>
                     <p className="text-[10px] text-white/20 leading-relaxed">
@@ -111,8 +111,8 @@ export default function ToolsPageClient() {
                         <a href="/terms" className="hover:text-[#d29e4a] transition-colors">Terms of Service</a>
                         <a href="/" className="hover:text-[#d29e4a] transition-colors">Home</a>
                         <span className="flex items-center gap-2">
-                            <img src="/equal-housing.jpg" alt="Equal Housing Opportunity" className="h-6 w-auto opacity-50" />
-                            Equal Housing Opportunity
+                            <img src="/equal-housing.jpg" alt="Equal Opportunity Lender" className="h-6 w-auto opacity-50" />
+                            Equal Opportunity Lender
                         </span>
                     </div>
                     <p className="text-[10px] sm:text-xs text-white/20">&copy; 2026 Supernova Mortgage Brokers. All rights reserved.</p>
