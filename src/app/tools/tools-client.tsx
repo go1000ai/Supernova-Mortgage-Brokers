@@ -104,7 +104,7 @@ export default function ToolsPageClient() {
                         a loan offer or commitment to lend. Actual rates, payments, and terms may vary.
                     </p>
                     <p className="text-[10px] text-white/20 leading-relaxed">
-                        Supernova Mortgage Brokers is a DBA of My Mortgage, Inc. NMLS #1880516.
+                        My Mortgage, Inc. doing business as Supernova Mortgage Brokers. NMLS #1880516.
                     </p>
                     <div className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-3 sm:gap-6 text-xs text-white/30">
                         <a href="/privacy" className="hover:text-[#d29e4a] transition-colors">Privacy Policy</a>
