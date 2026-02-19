@@ -103,6 +103,9 @@ export default function ToolsPageClient() {
                         Equal Housing Opportunity. These calculators are for illustrative purposes only and do not constitute
                         a loan offer or commitment to lend. Actual rates, payments, and terms may vary.
                     </p>
+                    <p className="text-[10px] text-white/20 leading-relaxed">
+                        Supernova Mortgage Brokers is a DBA of My Mortgage, Inc. NMLS #1880516.
+                    </p>
                     <div className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-3 sm:gap-6 text-xs text-white/30">
                         <a href="/privacy" className="hover:text-[#d29e4a] transition-colors">Privacy Policy</a>
                         <a href="/terms" className="hover:text-[#d29e4a] transition-colors">Terms of Service</a>

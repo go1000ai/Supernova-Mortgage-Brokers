@@ -744,6 +744,9 @@ export default function HomePage() {
                             Actual rates, payments, and costs may vary. Borrowers must qualify based on creditworthiness, income, assets, and property valuation.
                             Mortgage insurance may be required for certain loan programs. Consult with a licensed mortgage professional for specific program eligibility and terms.
                         </p>
+                        <p className="text-[10px] text-white/20 leading-relaxed text-center max-w-4xl mx-auto">
+                            Supernova Mortgage Brokers is a DBA of My Mortgage, Inc. NMLS #1880516.
+                        </p>
                     </div>
 
                     {/* Bottom Bar */}

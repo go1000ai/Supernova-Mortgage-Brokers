@@ -1296,6 +1296,7 @@ export default function PrivacyPolicyPage() {
                 rights reserved.
               </p>
               <p className="mt-1">Equal Housing Opportunity.</p>
+              <p className="mt-1">Supernova Mortgage Brokers is a DBA of My Mortgage, Inc.</p>
             </div>
           </div>
         </div>

@@ -341,6 +341,9 @@ export default function ProgramPageLayout({
                         are subject to change without notice. This is not a commitment to lend. Restrictions may apply.
                         Information is intended for mortgage professionals only. Not all products are available in all states.
                     </p>
+                    <p className="text-[10px] sm:text-xs text-white/30 leading-relaxed">
+                        Supernova Mortgage Brokers is a DBA of My Mortgage, Inc. NMLS #1880516.
+                    </p>
                     <div className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-3 sm:gap-6 text-xs text-white/30">
                         <a href="/privacy" className="hover:text-[#d29e4a] transition-colors">Privacy Policy</a>
                         <a href="/terms" className="hover:text-[#d29e4a] transition-colors">Terms of Service</a>
