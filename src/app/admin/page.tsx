@@ -3,9 +3,11 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { Eye, EyeOff } from 'lucide-react';
 
 export default function AdminLoginPage() {
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -32,7 +34,6 @@ export default function AdminLoginPage() {
   return (
     <div className="min-h-screen bg-[#0a1f1a] flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
-        {/* Logo */}
         <div className="flex justify-center mb-8">
           <Image src="/logo-transparent.png" alt="Supernova Mortgage Brokers" width={80} height={80} />
         </div>
@@ -46,14 +47,24 @@ export default function AdminLoginPage() {
               <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-2">
                 Password
               </label>
-              <input
-                type="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                placeholder="Enter admin password"
-                required
-                className="w-full bg-black/30 border border-[#d29e4a]/20 rounded-xl px-4 py-3 text-white placeholder-white/20 text-sm focus:outline-none focus:border-[#d29e4a]/60 transition-colors"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  placeholder="Enter admin password"
+                  required
+                  className="w-full bg-black/30 border border-[#d29e4a]/20 rounded-xl px-4 py-3 pr-11 text-white placeholder-white/20 text-sm focus:outline-none focus:border-[#d29e4a]/60 transition-colors"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(s => !s)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
+                  tabIndex={-1}
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
             </div>
 
             {error && (

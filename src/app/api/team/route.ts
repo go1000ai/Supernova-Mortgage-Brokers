@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 import {
   getTeam,
   addTeamMember,
@@ -8,9 +7,8 @@ import {
   uploadTeamImage,
 } from '@/lib/team-storage';
 
-async function isAuthed(): Promise<boolean> {
-  const store = await cookies();
-  return store.get('admin_session')?.value === 'authenticated';
+function isAuthed(req: NextRequest): boolean {
+  return req.cookies.get('admin_session')?.value === 'authenticated';
 }
 
 export async function GET() {
@@ -19,7 +17,7 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  if (!(await isAuthed())) {
+  if (!isAuthed(req)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -42,7 +40,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
-  if (!(await isAuthed())) {
+  if (!isAuthed(req)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -65,7 +63,7 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-  if (!(await isAuthed())) {
+  if (!isAuthed(req)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -75,7 +73,7 @@ export async function DELETE(req: NextRequest) {
 }
 
 export async function PATCH(req: NextRequest) {
-  if (!(await isAuthed())) {
+  if (!isAuthed(req)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
