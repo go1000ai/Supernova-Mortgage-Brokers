@@ -759,7 +759,7 @@ export default function HomePage() {
                                 Equal Opportunity Lender
                             </span>
                         </div>
-                        <p>&copy; 2026 Supernova Mortgage Brokers. NMLS #1880516. All rights reserved.</p>
+                        <p>&copy; 2026 Supernova Mortgage Brokers. NMLS #1880516. All rights reserved. <a href="/admin" className="text-white/10 hover:text-white/30 transition-colors ml-2">Admin</a></p>
                     </div>
                 </div>
             </footer>
