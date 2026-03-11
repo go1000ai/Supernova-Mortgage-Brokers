@@ -1,4 +1,4 @@
-import { put, list, del } from '@vercel/blob';
+import { createClient } from '@supabase/supabase-js';
 
 export interface TeamMember {
   id: string;
@@ -11,66 +11,65 @@ export interface TeamMember {
   order: number;
 }
 
-const BLOB_KEY = 'team-data.json';
-
-// Default team data used when no blob store is configured
-const DEFAULT_TEAM: TeamMember[] = [
-  {
-    id: '1',
-    name: 'Jorge Diaz',
-    title: 'Founder & Senior Mortgage Broker',
-    bio: 'With over 15 years of experience in the Florida mortgage market, Jorge founded Supernova Mortgage Brokers with a mission to make homeownership accessible to every family. He specializes in FHA, VA, and conventional loans.',
-    image: '/logo-transparent.png',
-    email: 'supernova@snmmortgage.com',
-    phone: '(689) 242-4400',
-    order: 0,
-  },
-];
-
-export async function getTeam(): Promise<TeamMember[]> {
-  const token = process.env.BLOB_READ_WRITE_TOKEN;
-
-  if (!token) {
-    return DEFAULT_TEAM;
-  }
-
-  try {
-    const { blobs } = await list({ prefix: BLOB_KEY });
-    if (blobs.length === 0) return DEFAULT_TEAM;
-
-    const res = await fetch(blobs[0].url, { cache: 'no-store' });
-    if (!res.ok) return DEFAULT_TEAM;
-
-    const data: TeamMember[] = await res.json();
-    return data.sort((a, b) => a.order - b.order);
-  } catch {
-    return DEFAULT_TEAM;
-  }
+function getAdminClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+  return createClient(url, key);
 }
 
-export async function saveTeam(members: TeamMember[]): Promise<void> {
-  const token = process.env.BLOB_READ_WRITE_TOKEN;
-  if (!token) throw new Error('BLOB_READ_WRITE_TOKEN is not configured');
+export async function getTeam(): Promise<TeamMember[]> {
+  const supabase = getAdminClient();
+  const { data, error } = await supabase
+    .from('team_members')
+    .select('*')
+    .order('order', { ascending: true });
 
-  // Delete old blob first
-  try {
-    const { blobs } = await list({ prefix: BLOB_KEY });
-    for (const blob of blobs) {
-      await del(blob.url);
-    }
-  } catch { /* ignore */ }
+  if (error || !data) return [];
+  return data as TeamMember[];
+}
 
-  const json = JSON.stringify(members, null, 2);
-  const blob = new Blob([json], { type: 'application/json' });
-  await put(BLOB_KEY, blob, { access: 'public', addRandomSuffix: false });
+export async function addTeamMember(member: Omit<TeamMember, 'id'>): Promise<TeamMember> {
+  const supabase = getAdminClient();
+  const { data, error } = await supabase
+    .from('team_members')
+    .insert(member)
+    .select()
+    .single();
+
+  if (error || !data) throw new Error(error?.message ?? 'Insert failed');
+  return data as TeamMember;
+}
+
+export async function updateTeamMember(id: string, updates: Partial<Omit<TeamMember, 'id'>>): Promise<TeamMember> {
+  const supabase = getAdminClient();
+  const { data, error } = await supabase
+    .from('team_members')
+    .update(updates)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error || !data) throw new Error(error?.message ?? 'Update failed');
+  return data as TeamMember;
+}
+
+export async function deleteTeamMember(id: string): Promise<void> {
+  const supabase = getAdminClient();
+  const { error } = await supabase.from('team_members').delete().eq('id', id);
+  if (error) throw new Error(error.message);
 }
 
 export async function uploadTeamImage(file: File): Promise<string> {
-  const token = process.env.BLOB_READ_WRITE_TOKEN;
-  if (!token) throw new Error('BLOB_READ_WRITE_TOKEN is not configured');
-
+  const supabase = getAdminClient();
   const ext = file.name.split('.').pop() ?? 'jpg';
-  const filename = `team/${Date.now()}.${ext}`;
-  const { url } = await put(filename, file, { access: 'public' });
-  return url;
+  const filename = `${Date.now()}.${ext}`;
+
+  const { error } = await supabase.storage
+    .from('team-photos')
+    .upload(filename, file, { upsert: true, contentType: file.type });
+
+  if (error) throw new Error(error.message);
+
+  const { data } = supabase.storage.from('team-photos').getPublicUrl(filename);
+  return data.publicUrl;
 }

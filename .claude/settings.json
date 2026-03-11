@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find '/Users/hsantiago15/Documents/Supernova Mortgage Brokers' -type f -name package.json -o -name next.config.* -o -name .env*)",
+      "Bash(npx tsc:*)",
+      "Bash(find /Users/hsantiago15/Documents -name .env* -not -path */node_modules/*)",
+      "Bash(\"/Users/hsantiago15/Documents/Supernova Mortgage:*)",
+      "Bash(find ~/Library -name *supabase* -type f)",
+      "Bash(security find-generic-password:*)"
+    ]
+  }
+}

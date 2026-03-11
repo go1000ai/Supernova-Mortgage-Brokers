@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo, useRef } from "react";
+import React, { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { motion, useTransform, useSpring, useMotionValue } from "framer-motion";
 
 // --- Types ---
@@ -64,8 +64,8 @@ function FlipCard({
             }}
             transition={{
                 type: "spring",
-                stiffness: 40,
-                damping: 15,
+                stiffness: 60,
+                damping: 18,
             }}
             style={{
                 position: "absolute",
@@ -73,6 +73,7 @@ function FlipCard({
                 height: IMG_HEIGHT,
                 transformStyle: "preserve-3d",
                 perspective: "1000px",
+                willChange: "transform",
             }}
             className="cursor-pointer group"
         >
@@ -173,13 +174,13 @@ export default function IntroAnimation() {
     // --- Virtual Scroll Logic ---
     const virtualScroll = useMotionValue(0);
     const scrollRef = useRef(0);
+    const touchStartYRef = useRef(0);
 
     useEffect(() => {
         const container = containerRef.current;
         if (!container) return;
 
         const handleWheel = (e: WheelEvent) => {
-            // Release scroll when animation is complete (scrolling down at max) or at top (scrolling up)
             if (scrollRef.current >= MAX_SCROLL && e.deltaY > 0) return;
             if (scrollRef.current <= 0 && e.deltaY < 0) return;
 
@@ -190,28 +191,26 @@ export default function IntroAnimation() {
             virtualScroll.set(newScroll);
         };
 
-        let touchStartY = 0;
         const handleTouchStart = (e: TouchEvent) => {
-            touchStartY = e.touches[0].clientY;
+            touchStartYRef.current = e.touches[0].clientY;
         };
         const handleTouchMove = (e: TouchEvent) => {
             const touchY = e.touches[0].clientY;
-            const deltaY = touchStartY - touchY;
-            touchStartY = touchY;
+            const deltaY = touchStartYRef.current - touchY;
+            touchStartYRef.current = touchY;
 
-            // Release scroll when animation is complete (swiping up at max) or at top (swiping down)
             if (scrollRef.current >= MAX_SCROLL && deltaY > 0) return;
             if (scrollRef.current <= 0 && deltaY < 0) return;
 
             e.preventDefault();
 
-            const newScroll = Math.min(Math.max(scrollRef.current + deltaY * 2, 0), MAX_SCROLL);
+            const newScroll = Math.min(Math.max(scrollRef.current + deltaY * 2.5, 0), MAX_SCROLL);
             scrollRef.current = newScroll;
             virtualScroll.set(newScroll);
         };
 
         container.addEventListener("wheel", handleWheel, { passive: false });
-        container.addEventListener("touchstart", handleTouchStart, { passive: false });
+        container.addEventListener("touchstart", handleTouchStart, { passive: true });
         container.addEventListener("touchmove", handleTouchMove, { passive: false });
 
         return () => {
@@ -222,10 +221,10 @@ export default function IntroAnimation() {
     }, [virtualScroll]);
 
     const morphProgress = useTransform(virtualScroll, [0, 600], [0, 1]);
-    const smoothMorph = useSpring(morphProgress, { stiffness: 40, damping: 20 });
+    const smoothMorph = useSpring(morphProgress, { stiffness: 70, damping: 22 });
 
     const scrollRotate = useTransform(virtualScroll, [600, 3000], [0, 360]);
-    const smoothScrollRotate = useSpring(scrollRotate, { stiffness: 40, damping: 20 });
+    const smoothScrollRotate = useSpring(scrollRotate, { stiffness: 70, damping: 22 });
 
     // --- Mouse Parallax ---
     const mouseX = useMotionValue(0);

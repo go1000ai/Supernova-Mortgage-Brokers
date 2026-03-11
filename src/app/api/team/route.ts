@@ -1,10 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { getTeam, saveTeam, uploadTeamImage, TeamMember } from '@/lib/team-storage';
-import { randomUUID } from 'crypto';
+import {
+  getTeam,
+  addTeamMember,
+  updateTeamMember,
+  deleteTeamMember,
+  uploadTeamImage,
+} from '@/lib/team-storage';
 
-function isAuthed(): Promise<boolean> {
-  return cookies().then(c => c.get('admin_session')?.value === 'authenticated');
+async function isAuthed(): Promise<boolean> {
+  const store = await cookies();
+  return store.get('admin_session')?.value === 'authenticated';
 }
 
 export async function GET() {
@@ -17,41 +23,22 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const contentType = req.headers.get('content-type') ?? '';
-  let imageUrl = '/logo-transparent.png';
-  let name = '', title = '', bio = '', email = '', phone = '';
+  const form = await req.formData();
+  const name = form.get('name') as string;
+  const title = form.get('title') as string;
+  const bio = form.get('bio') as string;
+  const email = (form.get('email') as string) ?? '';
+  const phone = (form.get('phone') as string) ?? '';
+  let image = (form.get('currentImage') as string) || '/logo-transparent.png';
 
-  if (contentType.includes('multipart/form-data')) {
-    const form = await req.formData();
-    name = form.get('name') as string;
-    title = form.get('title') as string;
-    bio = form.get('bio') as string;
-    email = (form.get('email') as string) ?? '';
-    phone = (form.get('phone') as string) ?? '';
-    const imageFile = form.get('image') as File | null;
-    if (imageFile && imageFile.size > 0) {
-      try {
-        imageUrl = await uploadTeamImage(imageFile);
-      } catch { /* keep default */ }
-    }
-  } else {
-    const body = await req.json();
-    name = body.name; title = body.title; bio = body.bio;
-    email = body.email ?? ''; phone = body.phone ?? '';
-    if (body.image) imageUrl = body.image;
+  const imageFile = form.get('image') as File | null;
+  if (imageFile && imageFile.size > 0) {
+    try { image = await uploadTeamImage(imageFile); } catch { /* keep default */ }
   }
 
   const team = await getTeam();
-  const newMember: TeamMember = {
-    id: randomUUID(),
-    name, title, bio, email, phone,
-    image: imageUrl,
-    order: team.length,
-  };
-
-  team.push(newMember);
-  await saveTeam(team);
-  return NextResponse.json(newMember, { status: 201 });
+  const member = await addTeamMember({ name, title, bio, email, phone, image, order: team.length });
+  return NextResponse.json(member, { status: 201 });
 }
 
 export async function PUT(req: NextRequest) {
@@ -59,38 +46,22 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const contentType = req.headers.get('content-type') ?? '';
-  let id = '', name = '', title = '', bio = '', email = '', phone = '', imageUrl = '';
+  const form = await req.formData();
+  const id = form.get('id') as string;
+  const name = form.get('name') as string;
+  const title = form.get('title') as string;
+  const bio = form.get('bio') as string;
+  const email = (form.get('email') as string) ?? '';
+  const phone = (form.get('phone') as string) ?? '';
+  let image = (form.get('currentImage') as string) ?? '';
 
-  if (contentType.includes('multipart/form-data')) {
-    const form = await req.formData();
-    id = form.get('id') as string;
-    name = form.get('name') as string;
-    title = form.get('title') as string;
-    bio = form.get('bio') as string;
-    email = (form.get('email') as string) ?? '';
-    phone = (form.get('phone') as string) ?? '';
-    imageUrl = (form.get('currentImage') as string) ?? '';
-    const imageFile = form.get('image') as File | null;
-    if (imageFile && imageFile.size > 0) {
-      try {
-        imageUrl = await uploadTeamImage(imageFile);
-      } catch { /* keep existing */ }
-    }
-  } else {
-    const body = await req.json();
-    id = body.id; name = body.name; title = body.title;
-    bio = body.bio; email = body.email ?? ''; phone = body.phone ?? '';
-    imageUrl = body.image ?? '';
+  const imageFile = form.get('image') as File | null;
+  if (imageFile && imageFile.size > 0) {
+    try { image = await uploadTeamImage(imageFile); } catch { /* keep existing */ }
   }
 
-  const team = await getTeam();
-  const idx = team.findIndex(m => m.id === id);
-  if (idx === -1) return NextResponse.json({ error: 'Not found' }, { status: 404 });
-
-  team[idx] = { ...team[idx], name, title, bio, email, phone, image: imageUrl || team[idx].image };
-  await saveTeam(team);
-  return NextResponse.json(team[idx]);
+  const updated = await updateTeamMember(id, { name, title, bio, email, phone, image });
+  return NextResponse.json(updated);
 }
 
 export async function DELETE(req: NextRequest) {
@@ -99,9 +70,7 @@ export async function DELETE(req: NextRequest) {
   }
 
   const { id } = await req.json();
-  const team = await getTeam();
-  const filtered = team.filter(m => m.id !== id).map((m, i) => ({ ...m, order: i }));
-  await saveTeam(filtered);
+  await deleteTeamMember(id);
   return NextResponse.json({ ok: true });
 }
 
@@ -110,14 +79,8 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  // Reorder: body is array of { id, order }
+  // Reorder: array of { id, order }
   const updates: { id: string; order: number }[] = await req.json();
-  const team = await getTeam();
-  for (const u of updates) {
-    const m = team.find(t => t.id === u.id);
-    if (m) m.order = u.order;
-  }
-  team.sort((a, b) => a.order - b.order);
-  await saveTeam(team);
+  await Promise.all(updates.map(u => updateTeamMember(u.id, { order: u.order })));
   return NextResponse.json({ ok: true });
 }
