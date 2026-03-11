@@ -6,7 +6,8 @@
       "Bash(find /Users/hsantiago15/Documents -name .env* -not -path */node_modules/*)",
       "Bash(\"/Users/hsantiago15/Documents/Supernova Mortgage:*)",
       "Bash(find ~/Library -name *supabase* -type f)",
-      "Bash(security find-generic-password:*)"
+      "Bash(security find-generic-password:*)",
+      "Bash(printf '%s' 'Super123!')"
     ]
   }
 }

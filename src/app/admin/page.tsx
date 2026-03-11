@@ -4,8 +4,10 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Eye, EyeOff } from 'lucide-react';
+import { supabase } from '@/lib/supabase-client';
 
 export default function AdminLoginPage() {
+  const [email, setEmail] = useState('supernova@snmmortgage.com');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
@@ -17,17 +19,13 @@ export default function AdminLoginPage() {
     setLoading(true);
     setError('');
 
-    const res = await fetch('/api/auth', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password }),
-    });
+    const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
 
-    if (res.ok) {
-      router.push('/admin/team');
-    } else {
+    if (authError) {
       setError('Incorrect password. Please try again.');
       setLoading(false);
+    } else {
+      router.push('/admin/team');
     }
   };
 
@@ -44,9 +42,18 @@ export default function AdminLoginPage() {
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-2">
-                Password
-              </label>
+              <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-2">Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                required
+                className="w-full bg-black/30 border border-[#d29e4a]/20 rounded-xl px-4 py-3 text-white placeholder-white/20 text-sm focus:outline-none focus:border-[#d29e4a]/60 transition-colors"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-2">Password</label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
@@ -67,9 +74,7 @@ export default function AdminLoginPage() {
               </div>
             </div>
 
-            {error && (
-              <p className="text-red-400 text-xs text-center">{error}</p>
-            )}
+            {error && <p className="text-red-400 text-xs text-center">{error}</p>}
 
             <button
               type="submit"

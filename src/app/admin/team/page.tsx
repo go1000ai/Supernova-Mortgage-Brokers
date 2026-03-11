@@ -4,6 +4,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Plus, Pencil, Trash2, X, Check, LogOut, GripVertical, Upload } from 'lucide-react';
+import { supabase } from '@/lib/supabase-client';
 
 interface TeamMember {
   id: string;
@@ -39,9 +40,15 @@ export default function AdminTeamPage() {
     setTimeout(() => setToast(null), 3000);
   };
 
+  const getToken = async (): Promise<string> => {
+    const { data: { session } } = await supabase.auth.getSession();
+    return session?.access_token ?? '';
+  };
+
   const loadTeam = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) { router.push('/admin'); return; }
     const res = await fetch('/api/team');
-    if (res.status === 401) { router.push('/admin'); return; }
     const data = await res.json();
     setTeam(data);
     setLoading(false);
@@ -50,7 +57,7 @@ export default function AdminTeamPage() {
   useEffect(() => { loadTeam(); }, []);
 
   const handleLogout = async () => {
-    await fetch('/api/auth', { method: 'DELETE' });
+    await supabase.auth.signOut();
     router.push('/admin');
   };
 
@@ -97,7 +104,8 @@ export default function AdminTeamPage() {
     fd.append('phone', form.phone ?? '');
     if (imageFile) fd.append('image', imageFile);
 
-    const res = await fetch('/api/team', { method: 'POST', body: fd });
+    const token = await getToken();
+    const res = await fetch('/api/team', { method: 'POST', body: fd, headers: { Authorization: `Bearer ${token}` } });
     if (res.ok) {
       showToast('Team member added!');
       cancelEdit();
@@ -125,7 +133,8 @@ export default function AdminTeamPage() {
     fd.append('currentImage', form.image);
     if (imageFile) fd.append('image', imageFile);
 
-    const res = await fetch('/api/team', { method: 'PUT', body: fd });
+    const token = await getToken();
+    const res = await fetch('/api/team', { method: 'PUT', body: fd, headers: { Authorization: `Bearer ${token}` } });
     if (res.ok) {
       showToast('Member updated!');
       cancelEdit();
@@ -138,9 +147,10 @@ export default function AdminTeamPage() {
 
   const handleDelete = async (id: string) => {
     setSaving(true);
+    const token = await getToken();
     const res = await fetch('/api/team', {
       method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
       body: JSON.stringify({ id }),
     });
     if (res.ok) {
