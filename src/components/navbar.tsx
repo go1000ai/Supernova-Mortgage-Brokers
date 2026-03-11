@@ -25,6 +25,7 @@ const NAV_LINKS = [
         ],
     },
     { label: "Tools", href: "/tools" },
+    { label: "Our Team", href: "/team" },
     { label: "Testimonials", href: "/#testimonials" },
     { label: "Contact", href: "/#contact" },
 ];
