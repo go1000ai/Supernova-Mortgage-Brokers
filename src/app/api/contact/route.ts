@@ -31,27 +31,32 @@ export async function POST(req: NextRequest) {
     }),
   });
 
-  if (!contactRes.ok) {
-    const err = await contactRes.text();
-    console.error('GHL contact error:', contactRes.status, err);
-    return NextResponse.json({ error: 'Failed to submit. Please try again.' }, { status: 500 });
+  let contactId: string | null = null;
+
+  if (contactRes.ok) {
+    const { contact } = await contactRes.json();
+    contactId = contact?.id ?? null;
+  } else {
+    const errData = await contactRes.json().catch(() => null);
+    // GHL returns existing contactId on duplicate
+    if (errData?.meta?.contactId) {
+      contactId = errData.meta.contactId;
+    } else {
+      console.error('GHL contact error:', contactRes.status, JSON.stringify(errData));
+      return NextResponse.json({ error: 'Failed to submit. Please try again.' }, { status: 500 });
+    }
   }
 
-  const { contact } = await contactRes.json();
-
   // Add note with loan type + message so {{ contact.notes }} works in automations
-  if (contact?.id && (loanType || message)) {
+  if (contactId && (loanType || message)) {
     const noteLines: string[] = [];
     if (loanType) noteLines.push(`Loan Type: ${loanType}`);
     if (message) noteLines.push(`Message: ${message}`);
 
-    await fetch(`https://services.leadconnectorhq.com/contacts/${contact.id}/notes`, {
+    await fetch(`https://services.leadconnectorhq.com/contacts/${contactId}/notes`, {
       method: 'POST',
       headers: GHL_HEADERS,
-      body: JSON.stringify({
-        userId: contact.id,
-        body: noteLines.join('\n'),
-      }),
+      body: JSON.stringify({ body: noteLines.join('\n') }),
     }).catch(e => console.error('GHL note error:', e));
   }
 
