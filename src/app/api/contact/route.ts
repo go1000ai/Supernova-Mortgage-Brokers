@@ -8,6 +8,7 @@ export async function POST(req: NextRequest) {
   }
 
   const ghlPayload: Record<string, unknown> = {
+    locationId: process.env.GHL_LOCATION_ID,
     firstName,
     lastName: lastName ?? '',
     email,
@@ -19,11 +20,12 @@ export async function POST(req: NextRequest) {
   if (loanType) ghlPayload.customField = [{ id: 'loan_type', value: loanType }];
   if (message) ghlPayload.message = message;
 
-  const res = await fetch('https://rest.gohighlevel.com/v1/contacts/', {
+  const res = await fetch('https://services.leadconnectorhq.com/contacts/', {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${process.env.GHL_API_KEY}`,
       'Content-Type': 'application/json',
+      Version: '2021-07-28',
     },
     body: JSON.stringify(ghlPayload),
   });
