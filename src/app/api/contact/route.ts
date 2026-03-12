@@ -32,8 +32,8 @@ export async function POST(req: NextRequest) {
 
   if (!res.ok) {
     const err = await res.text();
-    console.error('GHL error:', err);
-    return NextResponse.json({ error: 'Failed to submit. Please try again.' }, { status: 500 });
+    console.error('GHL error:', res.status, err);
+    return NextResponse.json({ error: 'Failed to submit. Please try again.', debug: err, status: res.status }, { status: 500 });
   }
 
   return NextResponse.json({ ok: true });
