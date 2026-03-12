@@ -163,7 +163,7 @@ export default function AdminTeamPage() {
     setSaving(false);
   };
 
-  const FormFields = () => (
+  const formFields = (
     <div className="space-y-4">
       {/* Image Upload */}
       <div>
@@ -349,7 +349,7 @@ export default function AdminTeamPage() {
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <FormFields />
+            {formFields}
             <div className="flex items-center gap-3 mt-6 pt-6 border-t border-[#d29e4a]/10">
               <button
                 onClick={submitAdd}
@@ -397,7 +397,7 @@ export default function AdminTeamPage() {
                         <X className="w-5 h-5" />
                       </button>
                     </div>
-                    <FormFields />
+                    {formFields}
                     <div className="flex items-center gap-3 mt-6 pt-6 border-t border-[#d29e4a]/10">
                       <button
                         onClick={submitEdit}
