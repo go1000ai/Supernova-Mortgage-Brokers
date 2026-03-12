@@ -394,14 +394,14 @@ export default function AdminTeamPage() {
             </button>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {team.map(member => (
               <div
                 key={member.id}
-                className="bg-gradient-to-b from-[#0e2922] to-[#0c2318] border border-[#d29e4a]/10 rounded-2xl overflow-hidden"
+                className={`bg-gradient-to-b from-[#0e2922] to-[#0c2318] border border-[#d29e4a]/10 rounded-2xl overflow-hidden ${editingId === member.id ? 'col-span-full' : ''}`}
               >
                 {editingId === member.id ? (
-                  /* Edit mode */
+                  /* Edit mode — full width */
                   <div className="p-6 sm:p-8">
                     <div className="flex items-center justify-between mb-6">
                       <h3 className="text-lg font-bold text-[#d29e4a]">Edit: {member.name}</h3>
@@ -425,63 +425,61 @@ export default function AdminTeamPage() {
                     </div>
                   </div>
                 ) : (
-                  /* View mode */
-                  <div className="flex items-start gap-4 p-5">
-                    <GripVertical className="w-4 h-4 text-white/20 mt-1 flex-shrink-0 cursor-grab" />
-                    <div className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 bg-black/30">
+                  /* Bento card */
+                  <div className="flex flex-col h-full">
+                    {/* Photo */}
+                    <div className="relative h-44 bg-black/30 flex-shrink-0">
                       <Image
                         src={member.image || '/logo-transparent.png'}
                         alt={member.name}
-                        width={56}
-                        height={56}
-                        className="w-full h-full object-cover"
+                        fill
+                        className="object-cover object-top"
                         unoptimized={member.image.startsWith('http')}
                       />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0e2922] via-transparent to-transparent" />
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-white truncate">{member.name}</h3>
-                      <p className="text-sm text-[#d29e4a]">{member.title}</p>
-                      <p className="text-xs text-white/40 mt-1 line-clamp-2">{member.bio}</p>
+                    {/* Info */}
+                    <div className="flex flex-col flex-1 p-4">
+                      <h3 className="font-bold text-white text-sm leading-tight">{member.name}</h3>
+                      <p className="text-xs text-[#d29e4a] mt-0.5 mb-2">{member.title}</p>
+                      <p className="text-xs text-white/40 line-clamp-3 flex-1">{member.bio}</p>
                       {(member.email || member.phone) && (
-                        <div className="flex flex-wrap gap-3 mt-2">
-                          {member.email && <span className="text-xs text-white/30">{member.email}</span>}
-                          {member.phone && <span className="text-xs text-white/30">{member.phone}</span>}
+                        <div className="mt-2 space-y-0.5">
+                          {member.email && <p className="text-xs text-white/30 truncate">{member.email}</p>}
+                          {member.phone && <p className="text-xs text-white/30">{member.phone}</p>}
                         </div>
                       )}
-                    </div>
-                    <div className="flex items-center gap-2 flex-shrink-0">
-                      <button
-                        onClick={() => startEdit(member)}
-                        className="p-2 rounded-lg text-white/40 hover:text-[#d29e4a] hover:bg-[#d29e4a]/10 transition-colors"
-                        title="Edit"
-                      >
-                        <Pencil className="w-4 h-4" />
-                      </button>
-                      {deleteConfirm === member.id ? (
-                        <div className="flex items-center gap-2">
-                          <button
-                            onClick={() => handleDelete(member.id)}
-                            disabled={saving}
-                            className="px-3 py-1.5 rounded-lg bg-red-500/20 border border-red-500/30 text-red-400 text-xs font-medium hover:bg-red-500/30 transition-colors disabled:opacity-60"
-                          >
-                            Confirm
-                          </button>
-                          <button
-                            onClick={() => setDeleteConfirm(null)}
-                            className="p-1.5 text-white/30 hover:text-white transition-colors"
-                          >
-                            <X className="w-4 h-4" />
-                          </button>
-                        </div>
-                      ) : (
+                      {/* Actions */}
+                      <div className="flex items-center justify-between mt-4 pt-3 border-t border-[#d29e4a]/10">
                         <button
-                          onClick={() => setDeleteConfirm(member.id)}
-                          className="p-2 rounded-lg text-white/40 hover:text-red-400 hover:bg-red-400/10 transition-colors"
-                          title="Delete"
+                          onClick={() => startEdit(member)}
+                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-white/50 hover:text-[#d29e4a] hover:bg-[#d29e4a]/10 transition-colors"
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <Pencil className="w-3.5 h-3.5" />
+                          Edit
                         </button>
-                      )}
+                        {deleteConfirm === member.id ? (
+                          <div className="flex items-center gap-1.5">
+                            <button
+                              onClick={() => handleDelete(member.id)}
+                              disabled={saving}
+                              className="px-3 py-1.5 rounded-lg bg-red-500/20 border border-red-500/30 text-red-400 text-xs font-medium hover:bg-red-500/30 transition-colors disabled:opacity-60"
+                            >
+                              Confirm
+                            </button>
+                            <button onClick={() => setDeleteConfirm(null)} className="p-1.5 text-white/30 hover:text-white transition-colors">
+                              <X className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            onClick={() => setDeleteConfirm(member.id)}
+                            className="p-1.5 rounded-lg text-white/30 hover:text-red-400 hover:bg-red-400/10 transition-colors"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 )}

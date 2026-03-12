@@ -78,7 +78,7 @@ export default function TeamPage() {
               <div className="w-12 h-12 rounded-full border-2 border-[#d29e4a] border-t-transparent animate-spin" />
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {team.map((member, i) => (
                 <motion.div
                   key={member.id}
