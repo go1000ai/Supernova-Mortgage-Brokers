@@ -6,6 +6,13 @@ import Image from 'next/image';
 import { Plus, Pencil, Trash2, X, Check, LogOut, GripVertical, Upload } from 'lucide-react';
 import { supabase } from '@/lib/supabase-client';
 
+function formatPhone(value: string): string {
+  const digits = value.replace(/\D/g, '').slice(0, 10);
+  if (digits.length <= 3) return digits.length ? `(${digits}` : '';
+  if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+}
+
 interface TeamMember {
   id: string;
   name: string;
@@ -261,7 +268,9 @@ export default function AdminTeamPage() {
             type="email"
             placeholder="email@example.com"
             value={form.email}
-            onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+            onChange={e => setForm(f => ({ ...f, email: e.target.value.toLowerCase().trim() }))}
+            autoComplete="email"
+            inputMode="email"
             className="w-full bg-black/30 border border-[#d29e4a]/20 rounded-xl px-4 py-2.5 text-white placeholder-white/20 text-sm focus:outline-none focus:border-[#d29e4a]/60 transition-colors"
           />
         </div>
@@ -271,7 +280,10 @@ export default function AdminTeamPage() {
             type="tel"
             placeholder="(555) 000-0000"
             value={form.phone}
-            onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
+            onChange={e => setForm(f => ({ ...f, phone: formatPhone(e.target.value) }))}
+            autoComplete="tel"
+            inputMode="tel"
+            maxLength={14}
             className="w-full bg-black/30 border border-[#d29e4a]/20 rounded-xl px-4 py-2.5 text-white placeholder-white/20 text-sm focus:outline-none focus:border-[#d29e4a]/60 transition-colors"
           />
         </div>
