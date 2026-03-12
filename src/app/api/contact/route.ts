@@ -7,6 +7,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'First name and email are required.' }, { status: 400 });
   }
 
+  const tags = ['website-contact'];
+  if (loanType) tags.push(loanType);
+
   const ghlPayload: Record<string, unknown> = {
     locationId: process.env.GHL_LOCATION_ID,
     firstName,
@@ -14,11 +17,13 @@ export async function POST(req: NextRequest) {
     email,
     phone: phone ?? '',
     source: 'Supernova Mortgage Website',
-    tags: ['website-contact'],
+    tags,
   };
 
-  if (loanType) ghlPayload.customField = [{ id: 'loan_type', value: loanType }];
-  if (message) ghlPayload.message = message;
+  // Store loan type + message in the website field if provided
+  if (loanType || message) {
+    ghlPayload.website = [loanType, message].filter(Boolean).join(' — ');
+  }
 
   const res = await fetch('https://services.leadconnectorhq.com/contacts/', {
     method: 'POST',
@@ -33,7 +38,7 @@ export async function POST(req: NextRequest) {
   if (!res.ok) {
     const err = await res.text();
     console.error('GHL error:', res.status, err);
-    return NextResponse.json({ error: 'Failed to submit. Please try again.', debug: err, status: res.status }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to submit. Please try again.' }, { status: 500 });
   }
 
   return NextResponse.json({ ok: true });
