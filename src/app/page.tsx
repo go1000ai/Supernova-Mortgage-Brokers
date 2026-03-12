@@ -580,55 +580,7 @@ export default function HomePage() {
                         </SlideInLeft>
 
                         <FadeInSection delay={0.2}>
-                            <div className="bg-[#0e2922] rounded-3xl p-8 md:p-10 shadow-2xl">
-                                <h3 className="text-xl font-bold mb-8 text-white">Send Us a Message</h3>
-                                <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                                        <input
-                                            type="text"
-                                            placeholder="First Name"
-                                            className="w-full px-4 py-3.5 bg-white/[0.05] border border-[#d29e4a]/10 rounded-xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[#d29e4a]/50 focus:bg-white/[0.08] transition-all"
-                                        />
-                                        <input
-                                            type="text"
-                                            placeholder="Last Name"
-                                            className="w-full px-4 py-3.5 bg-white/[0.05] border border-[#d29e4a]/10 rounded-xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[#d29e4a]/50 focus:bg-white/[0.08] transition-all"
-                                        />
-                                    </div>
-                                    <input
-                                        type="email"
-                                        placeholder="Email Address"
-                                        className="w-full px-4 py-3.5 bg-white/[0.05] border border-[#d29e4a]/10 rounded-xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[#d29e4a]/50 focus:bg-white/[0.08] transition-all"
-                                    />
-                                    <input
-                                        type="tel"
-                                        placeholder="Phone Number"
-                                        className="w-full px-4 py-3.5 bg-white/[0.05] border border-[#d29e4a]/10 rounded-xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[#d29e4a]/50 focus:bg-white/[0.08] transition-all"
-                                    />
-                                    <select
-                                        className="w-full px-4 py-3.5 bg-white/[0.05] border border-[#d29e4a]/10 rounded-xl text-sm text-white/50 focus:outline-none focus:border-[#d29e4a]/50 focus:bg-white/[0.08] transition-all"
-                                    >
-                                        <option value="">Loan Type</option>
-                                        <option value="purchase">Purchase</option>
-                                        <option value="refinance">Refinance</option>
-                                        <option value="cashout">Cash Out Refinance</option>
-                                        <option value="fha">FHA Loan</option>
-                                        <option value="va">VA Loan</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                    <textarea
-                                        placeholder="Tell us about your situation..."
-                                        rows={4}
-                                        className="w-full px-4 py-3.5 bg-white/[0.05] border border-[#d29e4a]/10 rounded-xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[#d29e4a]/50 focus:bg-white/[0.08] transition-all resize-none"
-                                    />
-                                    <button
-                                        type="submit"
-                                        className="w-full py-4 text-sm font-semibold rounded-full bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] text-[#0e2922] shadow-lg shadow-[#d29e4a]/25 hover:shadow-[#d29e4a]/40 transition-all hover:-translate-y-0.5"
-                                    >
-                                        Send Message
-                                    </button>
-                                </form>
-                            </div>
+                            <ContactForm />
                         </FadeInSection>
                     </div>
                 </div>
@@ -763,6 +715,83 @@ export default function HomePage() {
                     </div>
                 </div>
             </footer>
+        </div>
+    );
+}
+
+function ContactForm() {
+    const [form, setForm] = useState({ firstName: '', lastName: '', email: '', phone: '', loanType: '', message: '' });
+    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+    const inputClass = "w-full px-4 py-3.5 bg-white/[0.05] border border-[#d29e4a]/10 rounded-xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[#d29e4a]/50 focus:bg-white/[0.08] transition-all";
+
+    function formatPhone(val: string) {
+        const d = val.replace(/\D/g, '').slice(0, 10);
+        if (d.length <= 3) return d.length ? `(${d}` : '';
+        if (d.length <= 6) return `(${d.slice(0, 3)}) ${d.slice(3)}`;
+        return `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`;
+    }
+
+    const set = (field: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const val = field === 'phone' ? formatPhone(e.target.value) : e.target.value;
+        setForm(f => ({ ...f, [field]: val }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setStatus('loading');
+        try {
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(form),
+            });
+            setStatus(res.ok ? 'success' : 'error');
+        } catch {
+            setStatus('error');
+        }
+    };
+
+    if (status === 'success') {
+        return (
+            <div className="bg-[#0e2922] rounded-3xl p-8 md:p-10 shadow-2xl flex flex-col items-center justify-center min-h-[400px] text-center">
+                <div className="w-16 h-16 rounded-full bg-[#d29e4a]/20 flex items-center justify-center mb-6">
+                    <svg className="w-8 h-8 text-[#d29e4a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3">Message Sent!</h3>
+                <p className="text-white/50 text-sm">We&apos;ll be in touch shortly.</p>
+                <button onClick={() => { setStatus('idle'); setForm({ firstName: '', lastName: '', email: '', phone: '', loanType: '', message: '' }); }} className="mt-8 px-6 py-2.5 text-sm font-semibold rounded-full border border-[#d29e4a]/40 text-[#d29e4a] hover:bg-[#d29e4a]/10 transition-all">
+                    Send Another
+                </button>
+            </div>
+        );
+    }
+
+    return (
+        <div className="bg-[#0e2922] rounded-3xl p-8 md:p-10 shadow-2xl">
+            <h3 className="text-xl font-bold mb-8 text-white">Send Us a Message</h3>
+            <form className="space-y-5" onSubmit={handleSubmit}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <input type="text" placeholder="First Name" required value={form.firstName} onChange={set('firstName')} className={inputClass} />
+                    <input type="text" placeholder="Last Name" value={form.lastName} onChange={set('lastName')} className={inputClass} />
+                </div>
+                <input type="email" placeholder="Email Address" required value={form.email} onChange={set('email')} className={inputClass} />
+                <input type="tel" placeholder="Phone Number" value={form.phone} onChange={set('phone')} className={inputClass} />
+                <select value={form.loanType} onChange={set('loanType')} className="w-full px-4 py-3.5 bg-[#0e2922] border border-[#d29e4a]/10 rounded-xl text-sm text-white/50 focus:outline-none focus:border-[#d29e4a]/50 transition-all">
+                    <option value="">Loan Type</option>
+                    <option value="Purchase">Purchase</option>
+                    <option value="Refinance">Refinance</option>
+                    <option value="Cash Out Refinance">Cash Out Refinance</option>
+                    <option value="FHA Loan">FHA Loan</option>
+                    <option value="VA Loan">VA Loan</option>
+                    <option value="Other">Other</option>
+                </select>
+                <textarea placeholder="Tell us about your situation..." rows={4} value={form.message} onChange={set('message')} className={`${inputClass} resize-none`} />
+                {status === 'error' && <p className="text-red-400 text-xs text-center">Something went wrong. Please try again.</p>}
+                <button type="submit" disabled={status === 'loading'} className="w-full py-4 text-sm font-semibold rounded-full bg-gradient-to-r from-[#d29e4a] to-[#e8c47a] text-[#0e2922] shadow-lg shadow-[#d29e4a]/25 hover:shadow-[#d29e4a]/40 transition-all hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed">
+                    {status === 'loading' ? 'Sending…' : 'Send Message'}
+                </button>
+            </form>
         </div>
     );
 }
