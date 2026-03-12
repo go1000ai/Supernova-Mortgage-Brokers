@@ -6,6 +6,10 @@ const GHL_HEADERS = {
   Version: '2021-07-28',
 };
 
+// GHL custom field IDs for this location
+const FIELD_LOAN_TYPE = 'TLn2Q2eYw2AOefBj3y1g';
+const FIELD_NOTES = 'pBCUBrYdpE5dlKQV6Pzq';
+
 export async function POST(req: NextRequest) {
   const { firstName, lastName, email, phone, loanType, message } = await req.json();
 
@@ -16,49 +20,47 @@ export async function POST(req: NextRequest) {
   const tags = ['website-contact'];
   if (loanType) tags.push(loanType);
 
-  // Create contact
+  const customFields = [];
+  if (loanType) customFields.push({ id: FIELD_LOAN_TYPE, value: loanType });
+  if (message) customFields.push({ id: FIELD_NOTES, value: message });
+
+  const payload = {
+    locationId: process.env.GHL_LOCATION_ID,
+    firstName,
+    lastName: lastName ?? '',
+    email,
+    phone: phone ?? '',
+    source: 'Supernova Mortgage Website',
+    tags,
+    ...(customFields.length > 0 && { customFields }),
+  };
+
+  // Try to create contact
   const contactRes = await fetch('https://services.leadconnectorhq.com/contacts/', {
     method: 'POST',
     headers: GHL_HEADERS,
-    body: JSON.stringify({
-      locationId: process.env.GHL_LOCATION_ID,
-      firstName,
-      lastName: lastName ?? '',
-      email,
-      phone: phone ?? '',
-      source: 'Supernova Mortgage Website',
-      tags,
-    }),
+    body: JSON.stringify(payload),
   });
 
-  let contactId: string | null = null;
-
   if (contactRes.ok) {
-    const { contact } = await contactRes.json();
-    contactId = contact?.id ?? null;
-  } else {
-    const errData = await contactRes.json().catch(() => null);
-    // GHL returns existing contactId on duplicate
-    if (errData?.meta?.contactId) {
-      contactId = errData.meta.contactId;
-    } else {
-      console.error('GHL contact error:', contactRes.status, JSON.stringify(errData));
-      return NextResponse.json({ error: 'Failed to submit. Please try again.' }, { status: 500 });
-    }
+    return NextResponse.json({ ok: true });
   }
 
-  // Add note with loan type + message so {{ contact.notes }} works in automations
-  if (contactId && (loanType || message)) {
-    const noteLines: string[] = [];
-    if (loanType) noteLines.push(`Loan Type: ${loanType}`);
-    if (message) noteLines.push(`Message: ${message}`);
+  const errData = await contactRes.json().catch(() => null);
 
-    await fetch(`https://services.leadconnectorhq.com/contacts/${contactId}/notes`, {
-      method: 'POST',
-      headers: GHL_HEADERS,
-      body: JSON.stringify({ body: noteLines.join('\n') }),
-    }).catch(e => console.error('GHL note error:', e));
+  // On duplicate, update the existing contact with the new custom fields
+  if (errData?.meta?.contactId) {
+    const updateRes = await fetch(
+      `https://services.leadconnectorhq.com/contacts/${errData.meta.contactId}`,
+      {
+        method: 'PUT',
+        headers: GHL_HEADERS,
+        body: JSON.stringify({ customFields }),
+      }
+    );
+    if (updateRes.ok) return NextResponse.json({ ok: true });
   }
 
-  return NextResponse.json({ ok: true });
+  console.error('GHL contact error:', contactRes.status, JSON.stringify(errData));
+  return NextResponse.json({ error: 'Failed to submit. Please try again.' }, { status: 500 });
 }
