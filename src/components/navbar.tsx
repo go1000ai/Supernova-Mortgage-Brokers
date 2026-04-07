@@ -27,7 +27,7 @@ const NAV_LINKS = [
     { label: "Tools", href: "/tools" },
     { label: "Our Team", href: "/team" },
     { label: "Testimonials", href: "/#testimonials" },
-    { label: "Contact", href: "/#contact" },
+    // { label: "Contact", href: "/#contact" },  // Temporarily hidden for A2P verification
 ];
 
 export default function Navbar() {

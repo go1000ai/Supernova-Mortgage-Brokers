@@ -474,10 +474,10 @@ export default function PrivacyPolicyPage() {
                     </a>{" "}
                     or email us at{" "}
                     <a
-                      href="mailto:info@supernovamortgage.com"
+                      href="mailto:supernova@snmmortgage.com"
                       className="text-[#e8c47a] hover:text-[#d29e4a] transition-colors"
                     >
-                      info@supernovamortgage.com
+                      supernova@snmmortgage.com
                     </a>
                     . Please note: If you are a new customer, we can begin
                     sharing your information 30 days from the date we sent our
@@ -712,7 +712,7 @@ export default function PrivacyPolicyPage() {
                     time by: clicking the &quot;unsubscribe&quot; link in any marketing
                     email; replying &quot;STOP&quot; to any marketing text message;
                     calling us at (689) 242-4400; or emailing us at
-                    info@supernovamortgage.com. Please note that opting out of
+                    supernova@snmmortgage.com. Please note that opting out of
                     marketing does not affect transactional communications
                     related to your loan application or account.
                   </p>
@@ -725,7 +725,7 @@ export default function PrivacyPolicyPage() {
                   <p className="text-white/60 text-sm">
                     You may request to be placed on our internal Do Not Call list
                     by contacting us at (689) 242-4400 or by emailing
-                    info@supernovamortgage.com. We will process your request
+                    supernova@snmmortgage.com. We will process your request
                     within a reasonable timeframe and in compliance with the
                     National Do Not Call Registry and applicable state Do Not Call
                     regulations.
@@ -1047,10 +1047,10 @@ export default function PrivacyPolicyPage() {
                   <p>
                     <span className="text-white/70 font-medium">Email:</span>{" "}
                     <a
-                      href="mailto:info@supernovamortgage.com"
+                      href="mailto:supernova@snmmortgage.com"
                       className="text-[#e8c47a] hover:text-[#d29e4a] transition-colors"
                     >
-                      info@supernovamortgage.com
+                      supernova@snmmortgage.com
                     </a>
                   </p>
                   <p>
@@ -1058,10 +1058,10 @@ export default function PrivacyPolicyPage() {
                       Privacy Inquiries:
                     </span>{" "}
                     <a
-                      href="mailto:privacy@supernovamortgage.com"
+                      href="mailto:supernova@snmmortgage.com"
                       className="text-[#e8c47a] hover:text-[#d29e4a] transition-colors"
                     >
-                      privacy@supernovamortgage.com
+                      supernova@snmmortgage.com
                     </a>
                   </p>
                   <p>

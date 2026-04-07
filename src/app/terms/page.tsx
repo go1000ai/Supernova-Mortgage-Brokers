@@ -451,7 +451,7 @@ export default function TermsOfServicePage() {
                 </span>{" "}
                 You have the right to request paper copies of any electronic
                 communication. To request paper copies, contact us at
-                info@supernovamortgage.com or call (689) 242-4400. There may be
+                supernova@snmmortgage.com or call (689) 242-4400. There may be
                 a fee for providing paper copies.
               </p>
             </div>
@@ -505,7 +505,7 @@ export default function TermsOfServicePage() {
                 You may revoke your consent to receive calls or text messages at
                 any time by replying &quot;STOP&quot; to any text message, by
                 calling us at (689) 242-4400, or by emailing
-                info@supernovamortgage.com with the subject line &quot;Opt-Out.&quot;
+                supernova@snmmortgage.com with the subject line &quot;Opt-Out.&quot;
                 Opting out of marketing communications will not affect
                 transactional communications related to an active loan
                 application.
@@ -804,10 +804,10 @@ export default function TermsOfServicePage() {
                   <p>
                     Email:{" "}
                     <a
-                      href="mailto:info@supernovamortgage.com"
+                      href="mailto:supernova@snmmortgage.com"
                       className="text-[#e8c47a] hover:text-[#d29e4a] transition-colors"
                     >
-                      info@supernovamortgage.com
+                      supernova@snmmortgage.com
                     </a>
                   </p>
                   <p>NMLS #1880516</p>

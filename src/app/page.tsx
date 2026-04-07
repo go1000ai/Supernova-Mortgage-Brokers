@@ -540,8 +540,8 @@ export default function HomePage() {
             {/* ===== CTA — Background Image ===== */}
             <CtaParallaxSection />
 
-            {/* ===== CONTACT — White Background ===== */}
-            <section id="contact" className="py-16 sm:py-24 md:py-32 bg-white">
+            {/* ===== CONTACT — White Background ===== (Temporarily hidden for A2P verification) */}
+            <section id="contact" className="py-16 sm:py-24 md:py-32 bg-white" style={{ display: 'none' }}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16">
                         <SlideInLeft>
@@ -562,7 +562,7 @@ export default function HomePage() {
                             <div className="space-y-6">
                                 {[
                                     { icon: Phone, label: "Phone", value: "(689) 242-4400", href: "tel:6892424400" },
-                                    { icon: Mail, label: "Email", value: "info@supernovamortgage.com", href: "mailto:info@supernovamortgage.com" },
+                                    { icon: Mail, label: "Email", value: "supernova@snmmortgage.com", href: "mailto:supernova@snmmortgage.com" },
                                     { icon: MapPin, label: "Address", value: "600 North Thacker Avenue, Kissimmee, FL 34741", href: "#" },
                                     { icon: Clock, label: "Hours", value: "Mon-Fri: 9AM - 6PM | Sat: By Appointment", href: "#" },
                                 ].map((item) => (
@@ -632,7 +632,7 @@ export default function HomePage() {
                         <div>
                             <h4 className="font-bold text-sm mb-6 text-[#d29e4a]">Quick Links</h4>
                             <ul className="space-y-3">
-                                {["About Us", "Loan Programs", "Calculators", "Testimonials", "Contact Us"].map((link) => (
+                                {["About Us", "Loan Programs", "Calculators", "Testimonials"].map((link) => (
                                     <li key={link}>
                                         <a href="#" className="text-sm text-white/40 hover:text-[#d29e4a] transition-colors">
                                             {link}
@@ -678,9 +678,9 @@ export default function HomePage() {
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="mailto:info@supernovamortgage.com" className="flex items-center gap-2 hover:text-[#d29e4a] transition-colors">
+                                    <a href="mailto:supernova@snmmortgage.com" className="flex items-center gap-2 hover:text-[#d29e4a] transition-colors">
                                         <Mail className="w-4 h-4 text-[#d29e4a]/50" />
-                                        info@supernovamortgage.com
+                                        supernova@snmmortgage.com
                                     </a>
                                 </li>
                             </ul>
