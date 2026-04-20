@@ -63,7 +63,7 @@ export default function FHALoansPage() {
                 },
                 {
                     question: "What are the current FHA loan limits?",
-                    answer: "FHA loan limits vary by county and are updated annually. In most areas of Florida, the standard FHA loan limit for a single-family home is competitive with local housing prices. Higher-cost counties may have elevated limits. Contact Supernova Mortgage Brokers at (689) 242-4400 for the most current FHA loan limits in your specific area.",
+                    answer: "FHA loan limits vary by county and are updated annually. In most areas of Florida, the standard FHA loan limit for a single-family home is competitive with local housing prices. Higher-cost counties may have elevated limits. Contact Supernova Mortgage Brokers at (689) 262-4400 for the most current FHA loan limits in your specific area.",
                 },
             ]}
             eligibility={[

@@ -215,10 +215,10 @@ function CtaParallaxSection() {
                             Get a Free Quote
                         </a>
                         <a
-                            href="tel:6892424400"
+                            href="tel:6892624400"
                             className="w-full sm:w-auto px-8 py-4 text-base font-semibold rounded-full border-2 border-[#d29e4a]/40 text-white hover:bg-[#d29e4a] hover:text-[#0e2922] transition-all text-center"
                         >
-                            Call (689) 242-4400
+                            Call (689) 262-4400
                         </a>
                     </div>
                 </ScaleIn>
@@ -317,10 +317,10 @@ export default function HomePage() {
                             Get a Free Quote
                         </a>
                         <a
-                            href="tel:6892424400"
+                            href="tel:6892624400"
                             className="px-8 py-4 text-sm font-semibold rounded-full border-2 border-[#d29e4a]/40 text-white hover:bg-[#d29e4a] hover:text-[#0e2922] transition-all backdrop-blur-sm text-center"
                         >
-                            Call (689) 242-4400
+                            Call (689) 262-4400
                         </a>
                     </motion.div>
                 </div>
@@ -561,7 +561,7 @@ export default function HomePage() {
 
                             <div className="space-y-6">
                                 {[
-                                    { icon: Phone, label: "Phone", value: "(689) 242-4400", href: "tel:6892424400" },
+                                    { icon: Phone, label: "Phone", value: "(689) 262-4400", href: "tel:6892624400" },
                                     { icon: Mail, label: "Email", value: "supernova@snmmortgage.com", href: "mailto:supernova@snmmortgage.com" },
                                     { icon: MapPin, label: "Address", value: "600 North Thacker Avenue, Kissimmee, FL 34741", href: "#" },
                                     { icon: Clock, label: "Hours", value: "Mon-Fri: 9AM - 6PM | Sat: By Appointment", href: "#" },
@@ -672,9 +672,9 @@ export default function HomePage() {
                                     600 North Thacker Avenue, Kissimmee, FL 34741
                                 </li>
                                 <li>
-                                    <a href="tel:6892424400" className="flex items-center gap-2 hover:text-[#d29e4a] transition-colors">
+                                    <a href="tel:6892624400" className="flex items-center gap-2 hover:text-[#d29e4a] transition-colors">
                                         <Phone className="w-4 h-4 text-[#d29e4a]/50" />
-                                        (689) 242-4400
+                                        (689) 262-4400
                                     </a>
                                 </li>
                                 <li>
