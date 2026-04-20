@@ -11,7 +11,7 @@ const FIELD_LOAN_TYPE = 'TLn2Q2eYw2AOefBj3y1g';
 const FIELD_NOTES = 'pBCUBrYdpE5dlKQV6Pzq';
 
 export async function POST(req: NextRequest) {
-  const { firstName, lastName, email, phone, loanType, message } = await req.json();
+  const { firstName, lastName, email, phone, loanType, message, tags: extraTags } = await req.json();
 
   if (!firstName || !email) {
     return NextResponse.json({ error: 'First name and email are required.' }, { status: 400 });
@@ -19,6 +19,11 @@ export async function POST(req: NextRequest) {
 
   const tags = ['website-contact'];
   if (loanType) tags.push(loanType);
+  if (Array.isArray(extraTags)) {
+    for (const tag of extraTags) {
+      if (typeof tag === 'string' && tag.length > 0) tags.push(tag);
+    }
+  }
 
   const customFields = [];
   if (loanType) customFields.push({ id: FIELD_LOAN_TYPE, value: loanType });

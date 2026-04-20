@@ -10,6 +10,7 @@ const NAV_LINKS = [
         label: "Purchase",
         href: "/programs/fha-loans",
         children: [
+            { label: "First-Time Homebuyers", href: "/first-time-home-buyers" },
             { label: "FHA Loans", href: "/programs/fha-loans" },
             { label: "VA Loans", href: "/programs/va-loans" },
             { label: "Conventional", href: "/programs/conventional" },
@@ -123,11 +124,11 @@ export default function Navbar() {
                 {/* CTA + Phone (Desktop) */}
                 <div className="hidden lg:flex items-center gap-4">
                     <a
-                        href="tel:6892424400"
+                        href="tel:6892624400"
                         className="flex items-center gap-2 text-sm text-white/70 hover:text-[#d29e4a] transition-colors"
                     >
                         <Phone className="w-4 h-4" />
-                        (689) 242-4400
+                        (689) 262-4400
                     </a>
                     <motion.a
                         href="#contact"
@@ -241,13 +242,13 @@ export default function Navbar() {
                                 className="pt-4 mt-3 border-t border-[#d29e4a]/10 space-y-3"
                             >
                                 <a
-                                    href="tel:6892424400"
+                                    href="tel:6892624400"
                                     className="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-[#d29e4a] transition-colors rounded-xl hover:bg-white/5"
                                 >
                                     <div className="w-10 h-10 rounded-full bg-[#d29e4a]/10 flex items-center justify-center flex-shrink-0">
                                         <Phone className="w-4 h-4 text-[#d29e4a]" />
                                     </div>
-                                    <span className="text-base">(689) 242-4400</span>
+                                    <span className="text-base">(689) 262-4400</span>
                                 </a>
                                 <a
                                     href="#contact"
