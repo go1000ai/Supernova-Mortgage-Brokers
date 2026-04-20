@@ -376,8 +376,8 @@ export default function HomePage() {
                                     style={{ transformPerspective: 1000 }}
                                 >
                                     <ParallaxImage
-                                        src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80"
-                                        alt="Professional mortgage advisor"
+                                        src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80"
+                                        alt="Modern office building"
                                         className="w-full h-full"
                                         speed={200}
                                     />
