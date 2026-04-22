@@ -62,7 +62,7 @@ export default function TermsOfServicePage() {
                 Brokers (&quot;Company,&quot; &quot;we,&quot; &quot;us,&quot; or
                 &quot;our&quot;), located at{" "}
                 <span className="text-[#e8c47a]">
-                  www.supernovamortgage.com
+                  www.snmmortgage.com
                 </span>{" "}
                 (the &quot;Website&quot;), or by engaging our mortgage brokerage
                 services, you (&quot;User,&quot; &quot;you,&quot; or

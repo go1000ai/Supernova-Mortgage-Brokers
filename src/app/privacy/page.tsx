@@ -67,7 +67,7 @@ export default function PrivacyPolicyPage() {
                 the collection, use, disclosure, and safeguarding of information
                 we obtain from and about you when you visit our website at{" "}
                 <span className="text-[#e8c47a]">
-                  www.supernovamortgage.com
+                  www.snmmortgage.com
                 </span>{" "}
                 (the &quot;Website&quot;), contact us by phone or email, or apply
                 for mortgage services.
